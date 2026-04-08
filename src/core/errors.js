@@ -161,6 +161,7 @@ const errorTypes = {
     status: 500,
     code: 'DB_ERROR',
   },
+  // adding new errorType, specifically used when you change your password!
   PASSWORD_ALTERING_VALIDATION_ERROR: {
     description: 'There\'s some error occuring when validating the new password!',
     status: 400,
