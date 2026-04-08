@@ -161,12 +161,18 @@ const errorTypes = {
     status: 500,
     code: 'DB_ERROR',
   },
+  PASSWORD_ALTERING_VALIDATION_ERROR: {
+    description: 'There\'s some error occuring when validating the new password!',
+    status: 400,
+    code: 'PASSWORD_ALTER_VALIDATION_ERROR',
+  }
 };
 
 const errorResponder = (errorType, message = '') => {
   const error = new Error(message);
 
   if (errorType) {
+  
     error.code = errorType.code || 'UNKNOWN_ERROR';
     error.status = errorType.status || 500;
     error.description = errorType.description || 'Unknown error occurred';

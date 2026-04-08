@@ -169,19 +169,19 @@ async function changePassword(request, response, next) {
       throw errorResponder(errorTypes.VALIDATION_ERROR, 'Id is required!');
     }
     if (!matchOldPw){
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Old password is incorrect');
+      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'Old password is incorrect');
     }
     if (newPassword.length < 8){
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'New password must be at least 8 characters!');
+      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must be at least 8 characters!');
     }
     if (matchOldWithNewPw){
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'New password must not be same as the old password')
+      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must not be same as the old password')
       
     }
     if (newPassword !== confirmNewPassword){
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'New password confirmation must be same as the new password');
+      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password confirmation must be same as the new password');
     }
-    const hashedPassword = hashPassword(newPassword);
+    const hashedPassword = await hashPassword(newPassword);
     const success = await usersService.changePassword(id, hashedPassword);
 
     if (!success){
