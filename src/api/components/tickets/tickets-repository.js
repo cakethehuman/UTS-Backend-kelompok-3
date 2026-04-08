@@ -1,14 +1,14 @@
-const { tickets } = require('../../../models');
+const {Tickets} = require('../../../models');
 
-async function getBooks() {
-  return Books.find({});
+async function getTickets() {
+  return Tickets.find({});
 }
 
-async function create(title) {
-  return Books.create({ title });
+async function createTickets(match, seatId, price, gameTimeAndDate, status) {
+  return Tickets.create({match, seatId, price, gameTimeAndDate, status});
 }
 
 module.exports = {
-  getBooks,
-  create,
+  getTickets,
+  createTickets,
 };

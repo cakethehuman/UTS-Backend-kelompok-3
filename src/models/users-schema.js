@@ -1,7 +1,7 @@
 module.exports = (db) =>
   db.model(
     'Users',
-    db.Schema({
+    new db.Schema({
       email: String,
       password: String,
       fullName: String,

@@ -1,33 +1,30 @@
-const booksService = require('./books-service');
-const { errorResponder, errorTypes } = require('../../../core/errors');
+/* eslint-disable prettier/prettier */
+const ticketService = require('./tickets-service');
+// const { errorResponder, errorTypes } = require('../../../core/errors');
 
-async function getBooks(request, response, next) {
+async function getTickets(request, response, next) {
   try {
-    const books = await booksService.getBooks();
+    const tickets = await ticketService.getTickets();
 
-    return response.status(200).json(books);
+    return response.status(200).json(tickets);
   } catch (error) {
     return next(error);
   }
 }
 
-async function createBook(request, response, next) {
+async function createTickets(request, response, next) {
   try {
-    const { title } = request.body;
+    const {match, seatId, price, gameTimeAndDate, status} = request.body;
 
-    if (!title) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Title is required');
-    }
+    const tickets = await ticketService.createTickets(match, seatId, price, gameTimeAndDate, status);
 
-    const book = await booksService.create(title);
-
-    return response.status(200).json(book);
+    return response.status(200).json(tickets);
   } catch (error) {
     return next(error);
   }
 }
 
 module.exports = {
-  getBooks,
-  createBook,
+  getTickets,
+  createTickets,
 };

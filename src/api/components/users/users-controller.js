@@ -165,33 +165,50 @@ async function changePassword(request, response, next) {
   const matchOldPw = await passwordMatched(oldPassword, user.password);
   const matchOldWithNewPw = await passwordMatched(newPassword, user.password);
   try {
-      if (!user){
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Id is required!');
+
+      if (!user) {
+      throw errorResponder(
+        errorTypes.VALIDATION_ERROR, 
+        'Id is required!'
+      );
     }
-    if (!matchOldPw){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'Old password is incorrect');
+
+    if (!matchOldPw) {
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'Old password is incorrect');
     }
+    
     if (newPassword.length < 8){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must be at least 8 characters!');
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'New password must be at least 8 characters!');
     }
+
     if (matchOldWithNewPw){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must not be same as the old password')
-      
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'New password must not be same as the old password'
+      );
     }
+
     if (newPassword !== confirmNewPassword){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password confirmation must be same as the new password');
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'New password confirmation must be same as the new password');
     }
+    
     const hashedPassword = await hashPassword(newPassword);
     const success = await usersService.changePassword(id, hashedPassword);
 
     if (!success){
-      return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ""));
+      return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ''));
     }
   }
   catch (error){
     return next(error);
   }
-  return response.status(200).json({message: "Password successfully changed!"})
+  return response.status(200).json({message: 'Password successfully changed!'})
 
 
   // Note that the password is hashed in the database, so you need to
