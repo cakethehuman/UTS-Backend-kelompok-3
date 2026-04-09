@@ -36,5 +36,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  changePassword
+  changePassword,
 };

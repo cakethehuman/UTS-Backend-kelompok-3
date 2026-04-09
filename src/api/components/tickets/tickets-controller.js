@@ -24,7 +24,58 @@ async function createTickets(request, response, next) {
   }
 }
 
+async function getTicketById(request , response, next) {
+  try {
+    const { id } = request.params;
+    const ticket = await ticketService.getTicketById(id);
+
+    if (!ticket) {
+      return response.status(404).json({ message: 'Ticket not found' });
+    }
+
+    return response.status(200).json(ticket);   
+  }catch (error) {
+    return next(error);
+  }  
+}
+
+async function updateTicket(request, response, next) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+
+    const updatedTicket = await ticketService.updateTicket(id, updateData);
+
+    if (!updatedTicket) {
+      return response.status(404).json({ message: 'Ticket not found' });
+    }
+
+    return response.status(200).json(updatedTicket);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function deleteTicket(request, response, next) {
+  try {
+    const { id } = request.params;
+
+    const deletedTicket = await ticketService.deleteTicket(id);
+
+    if (!deletedTicket) {
+      return response.status(404).json({ message: 'Ticket not found' });
+    }
+
+    return response.status(200).json({ message: 'Ticket deleted successfully' });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 module.exports = {
   getTickets,
   createTickets,
+  getTicketById,
+  updateTicket,
+  deleteTicket
 };
