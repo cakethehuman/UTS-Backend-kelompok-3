@@ -4,16 +4,6 @@ async function getTickets() {
   return ticketsRepository.getTickets();
 }
 
-async function createTickets(match, seatId, price, gameTimeAndDate, status) {
-  return ticketsRepository.createTickets(
-    match,
-    seatId,
-    price,
-    gameTimeAndDate,
-    status
-  );
-}
-
 async function getTicketById(id) {
   return ticketsRepository.getTicketById(id);
 }
@@ -28,7 +18,6 @@ async function deleteTicket(id) {
 
 module.exports = {
   getTickets,
-  createTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
