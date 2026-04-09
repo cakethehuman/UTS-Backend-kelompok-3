@@ -7,7 +7,7 @@ const route = express.Router();
 module.exports = (app) => {
   app.use('/tickets', route);
 
-  // Get list of tickets
+  // Get tickets lists
   route.get('/', ticketsController.getTickets);
 
   // Create a new ticket
