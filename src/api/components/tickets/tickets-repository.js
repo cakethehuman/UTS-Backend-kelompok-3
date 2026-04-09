@@ -4,10 +4,6 @@ async function getTickets() {
   return Tickets.find({});
 }
 
-async function createTickets(match, seatId, price, gameTimeAndDate, status) {
-  return Tickets.create({match, seatId, price, gameTimeAndDate, status});
-}
-
 async function getTicketById(id) {
   return Tickets.findById(id);
 }
@@ -22,7 +18,6 @@ async function deleteTicket(id) {
 
 module.exports = {
   getTickets,
-  createTickets,
   getTicketById,
   updateTicket,
   deleteTicket,

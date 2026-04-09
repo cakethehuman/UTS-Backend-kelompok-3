@@ -10,15 +10,12 @@ module.exports = (app) => {
   // Get tickets lists
   route.get('/', ticketsController.getTickets);
 
-  // Create a new ticket
-  route.post('/', ticketsController.createTickets);
-
-  // TODO: Get a Ticket by id
+  // Get a Ticket by id
   route.get('/:id', ticketsController.getTicketById);
 
-  // TODO: Update a Ticket by id
+  // Ticket by id
   route.put('/:id', ticketsController.updateTicket);
 
-  // TODO: Delete a Ticket by id
+  // Delete a Ticket by id
   route.delete('/:id', ticketsController.deleteTicket);
 };

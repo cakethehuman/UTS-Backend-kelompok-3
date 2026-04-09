@@ -1,20 +1,21 @@
 // admin service akan mengambil repository dari user
-const userRepository = require('../users/users-repository');
+const adminRepository = require('./admin-repository');
 
-async function getAllUsers() {
-  return userRepository.getUser();
+async function createGames(homeTeam, awayTeam, date, status) {
+  return adminRepository.createTickets(homeTeam, awayTeam, date, status);
 }
 
-async function deleteUser(id) {
-  return userRepository.deleteUser(id);
-}
-
-async function updateUserRole(id, role) {
-  return userRepository.updateUserRole(id, role);
+async function createTickets(match, seatId, price, gameTimeAndDate, status) {
+  return adminRepository.createTickets(
+    match,
+    seatId,
+    price,
+    gameTimeAndDate,
+    status
+  );
 }
 
 module.exports = {
-  getAllUsers,
-  deleteUser,
-  updateUserRole,
+  createGames,
+  createTickets,
 };
