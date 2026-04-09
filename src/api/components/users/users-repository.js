@@ -1,4 +1,4 @@
-const { Users } = require('../../../models');
+const {Users} = require('../../../models');
 
 async function getUsers() {
   return Users.find({});
@@ -9,23 +9,23 @@ async function getUser(id) {
 }
 
 async function getUserByEmail(email) {
-  return Users.findOne({ email });
+  return Users.findOne({email});
 }
 
 async function createUser(email, password, fullName) {
-  return Users.create({ email, password, fullName });
+  return Users.create({email, password, fullName});
 }
 
 async function updateUser(id, email, fullName) {
-  return Users.updateOne({ _id: id }, { $set: { email, fullName } });
+  return Users.updateOne({_id: id}, {$set: {email, fullName}});
 }
 
 async function changePassword(id, password) {
-  return Users.updateOne({ _id: id }, { $set: { password } });
+  return Users.updateOne({_id: id}, {$set: {password}});
 }
 
 async function deleteUser(id) {
-  return Users.deleteOne({ _id: id });
+  return Users.deleteOne({_id: id});
 }
 
 module.exports = {
