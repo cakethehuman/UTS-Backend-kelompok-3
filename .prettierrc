@@ -1,8 +1,8 @@
 {
   "singleQuote": true,
-  "printWidth": 80,
-  "tabWidth": 2,
-  "useTabs": false,
+  "printWidth": 300,
+  "tabWidth": 4,
+  "useTabs": true,
   "semi": true,
   "quoteProps": "consistent",
   "trailingComma": "es5",

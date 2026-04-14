@@ -12,12 +12,17 @@ async function getUserByEmail(email) {
   return Users.findOne({ email });
 }
 
-async function createUser(email, password, fullName) {
-  return Users.create({ email, password, fullName });
+async function createUser(email, password, fullName, role) {
+  const currentDate = Date.now();
+  return Users.create({ email, password, fullName, role});
 }
 
 async function updateUser(id, email, fullName) {
   return Users.updateOne({ _id: id }, { $set: { email, fullName } });
+}
+
+async function updateUserSession(id) {
+  return Users.updateOne({_id: id}, {lastSession: Date.now()});
 }
 
 async function changePassword(id, password) {
@@ -28,6 +33,22 @@ async function deleteUser(id) {
   return Users.deleteOne({ _id: id });
 }
 
+// bingung
+// async function deleteStudentsByLastSession(startDate, endDate) {
+//   const start = new Date(startDate);
+//   const end = new Date(endDate);
+
+//   const result = await Users.deleteMany({
+//     role: 'user',
+//     lastSession: {
+//       $gte: start,
+//       $lte: end,
+//     },
+//   });
+
+//   return result.deletedCount;
+// }
+
 module.exports = {
   getUsers,
   getUser,
@@ -36,4 +57,5 @@ module.exports = {
   updateUser,
   changePassword,
   deleteUser,
+  updateUserSession,
 };
