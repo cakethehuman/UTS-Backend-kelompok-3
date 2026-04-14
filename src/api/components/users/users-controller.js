@@ -31,12 +31,10 @@ async function createUser(request, response, next) {
     const {
       email,
       password,
-      role,
       full_name: fullName,
       confirm_password: confirmPassword,
-      role,
     } = request.body;
-
+    const role = 'user';
     // Email is required and cannot be empty
     if (!email) {
       throw errorResponder(errorTypes.VALIDATION_ERROR, 'Email is required');

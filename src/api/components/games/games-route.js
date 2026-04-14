@@ -9,6 +9,9 @@ module.exports = (app) => {
 
   // Get all games
   route.get('/', gamesController.getGame);
+  
+  // make games (admin only later)
+  // route.post('/', gamesController.makeGame)
 
   // Get games by id
   route.get('/:id', gamesController.getGames);
