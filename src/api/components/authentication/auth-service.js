@@ -1,8 +1,9 @@
 
 const userRepository = require('../users/users-repository');
-const { passwordMatched } = require('../../../utils/password');
+const { hashPassword, passwordMatched } = require('../../../utils/password');
 const { errorResponder, errorTypes } = require('../../../core/errors');
 const { generateAccessToken } = require('../../../utils/jwt');
+const { hash } = require('bcrypt');
 
 
 
@@ -32,5 +33,35 @@ async function login(email, password) {
   };
 
   const token = generateAccessToken(payload);
-  
+
+  return {
+    accessToken: token
+  };
+
+}
+
+async function emailExists(email) {
+  const user = await usersRepository.getUserByEmail(email);
+  return !!user; // Return true if user exists, false otherwise
+}
+
+
+async function register(email, password, fullName){
+  if (await emailExists(email) ){
+    throw errorResponder(
+      errorTypes.EMAIL_ALREADY_TAKEN,
+      'Email already exists'
+    )
+  }
+  const hashedPassword = await hashPassword(password);
+  return usersRepository.createUser(email, hashedPassword, fullName);
+}
+
+async function getMe(){
+
+}
+
+module.exports = {
+  login,
+  register,
 }
