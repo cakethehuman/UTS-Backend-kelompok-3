@@ -31,6 +31,7 @@ async function createUser(request, response, next) {
     const {
       email,
       password,
+      role,
       full_name: fullName,
       confirm_password: confirmPassword,
       role,

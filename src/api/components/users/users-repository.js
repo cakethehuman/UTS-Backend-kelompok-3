@@ -20,6 +20,10 @@ async function updateUser(id, email, fullName) {
   return Users.updateOne({_id: id}, {$set: {email, fullName}});
 }
 
+async function updateUserSession(id) {
+  return Users.updateOne({_id: id}, {lastSession: Date.now()});
+}
+
 async function changePassword(id, password) {
   return Users.updateOne({_id: id}, {$set: {password}});
 }
@@ -27,6 +31,22 @@ async function changePassword(id, password) {
 async function deleteUser(id) {
   return Users.deleteOne({_id: id});
 }
+
+// bingung
+// async function deleteStudentsByLastSession(startDate, endDate) {
+//   const start = new Date(startDate);
+//   const end = new Date(endDate);
+
+//   const result = await Users.deleteMany({
+//     role: 'user',
+//     lastSession: {
+//       $gte: start,
+//       $lte: end,
+//     },
+//   });
+
+//   return result.deletedCount;
+// }
 
 module.exports = {
   getUsers,
@@ -36,4 +56,5 @@ module.exports = {
   updateUser,
   changePassword,
   deleteUser,
+  updateUserSession,
 };

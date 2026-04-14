@@ -4,3 +4,6 @@ desktop.ini
 .DS_Store
 .eslintcache
 .npm
+.eslintrc.js
+.prettierrc
+eslint.config.mjs
