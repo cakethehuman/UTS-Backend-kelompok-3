@@ -1,13 +1,7 @@
 module.exports = (db) =>
   db.model(
-    'games',
+    'Games',
     new db.Schema({
-      gameId: {
-        type: Number,
-        required: true,
-        unique: true,
-      },
-
       homeTeam: {
         id: Number,
         name: String,

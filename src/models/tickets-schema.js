@@ -1,18 +1,31 @@
+/* eslint-disable prettier/prettier */
 module.exports = (db) =>
   db.model(
-    'tickets',
-    db.Schema({
+    'Tickets',
+    new db.Schema({
       match : {
         type: String,
         required: true,
       },
-      seat : {
+
+      seatId: {
         type: String,
-        required: true
+        required: true,
       },
-      price : {
+      price: {
         type: Number,
-        required: true
-      }
+        required: true,
+      },
+
+      gameTimeAndDate: {
+        type: Date,
+        required: true,
+      },
+
+      status: {
+        type: String,
+        enum: ['reserved', 'open'],
+        default: 'open',
+      },
     })
   );

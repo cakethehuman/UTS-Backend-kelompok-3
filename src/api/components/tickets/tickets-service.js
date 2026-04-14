@@ -1,14 +1,24 @@
-const booksRepository = require('./books-repository');
+const ticketsRepository = require('./tickets-repository');
 
-async function getBooks() {
-  return booksRepository.getBooks();
+async function getTickets() {
+  return ticketsRepository.getTickets();
 }
 
-async function create(title) {
-  return booksRepository.create(title);
+async function getTicketById(id) {
+  return ticketsRepository.getTicketById(id);
+}
+
+async function updateTicket(id, updateData) {
+  return ticketsRepository.updateTicket(id, updateData);
+}
+
+async function deleteTicket(id) {
+  return ticketsRepository.deleteTicket(id);
 }
 
 module.exports = {
-  getBooks,
-  create,
+  getTickets,
+  getTicketById,
+  updateTicket,
+  deleteTicket,
 };
