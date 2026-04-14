@@ -1,21 +1,21 @@
 const express = require('express');
 
-const ticketsController = require('./books-controller');
+const ticketsController = require('./tickets-controller');
 
 const route = express.Router();
 
 module.exports = (app) => {
   app.use('/tickets', route);
 
-  // Get list of books
-  route.get('/', ticketsController.getBooks);
+  // Get tickets lists
+  route.get('/', ticketsController.getTickets);
 
-  // Create a new book
-  route.post('/', ticketsController.createBook);
+  // Get a Ticket by id
+  route.get('/:id', ticketsController.getTicketById);
 
-  // TODO: Get a book by id
+  // Ticket by id
+  route.put('/:id', ticketsController.updateTicket);
 
-  // TODO: Update a book by id
-
-  // TODO: Delete a book by id
+  // Delete a Ticket by id
+  route.delete('/:id', ticketsController.deleteTicket);
 };

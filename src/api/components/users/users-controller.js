@@ -34,6 +34,7 @@ async function createUser(request, response, next) {
       role,
       full_name: fullName,
       confirm_password: confirmPassword,
+      role,
     } = request.body;
 
     // Email is required and cannot be empty
@@ -80,7 +81,8 @@ async function createUser(request, response, next) {
     const success = await usersService.createUser(
       email,
       hashedPassword,
-      fullName
+      fullName,
+      role
     );
 
     if (!success) {
@@ -90,7 +92,7 @@ async function createUser(request, response, next) {
       );
     }
 
-    return response.status(201).json({ message: 'User created successfully' });
+    return response.status(201).json({message: 'User created successfully'});
   } catch (error) {
     return next(error);
   }
@@ -98,7 +100,7 @@ async function createUser(request, response, next) {
 
 async function updateUser(request, response, next) {
   try {
-    const { email, full_name: fullName } = request.body;
+    const {email, full_name: fullName} = request.body;
 
     // User must exist
     const user = await usersService.getUser(request.params.id);
@@ -140,7 +142,7 @@ async function updateUser(request, response, next) {
       );
     }
 
-    return response.status(200).json({ message: 'User updated successfully' });
+    return response.status(200).json({message: 'User updated successfully'});
   } catch (error) {
     return next(error);
   }
@@ -154,7 +156,6 @@ async function changePassword(request, response, next) {
     new_password: newPassword,
     confirm_new_password: confirmNewPassword,
   } = request.body;
-  
   // Make sure that:
   // - the user exists by checking the user ID
   // - the old password is correct
@@ -166,33 +167,48 @@ async function changePassword(request, response, next) {
   const matchOldPw = await passwordMatched(oldPassword, user.password);
   const matchOldWithNewPw = await passwordMatched(newPassword, user.password);
   try {
-      if (!user){
+
+      if (!user) {
       throw errorResponder(errorTypes.VALIDATION_ERROR, 'Id is required!');
     }
-    if (!matchOldPw){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'Old password is incorrect');
+
+    if (!matchOldPw) {
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'Old password is incorrect'
+      );
     }
     if (newPassword.length < 8){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must be at least 8 characters!');
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR,
+        'New password must be at least 8 characters!'
+      );
     }
+
     if (matchOldWithNewPw){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must not be same as the old password')
-      
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'New password must not be same as the old password'
+      );
     }
+
     if (newPassword !== confirmNewPassword){
-      throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password confirmation must be same as the new password');
+      throw errorResponder(
+        errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
+        'New password confirmation must be same as the new password');
     }
+    
     const hashedPassword = await hashPassword(newPassword);
     const success = await usersService.changePassword(id, hashedPassword);
 
     if (!success){
-      return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ""));
+      return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ''));
     }
   }
   catch (error){
     return next(error);
   }
-  return response.status(200).json({message: "Password successfully changed!"})
+  return response.status(200).json({message: 'Password successfully changed!'})
 
 
   // Note that the password is hashed in the database, so you need to

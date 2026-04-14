@@ -1,35 +1,24 @@
 module.exports = (db) =>
   db.model(
     'Users',
-    db.Schema({
+    new db.Schema({
       email: {
         type: String,
         required: true,
-        unique: true, // making the email unique
-        trim: true, // remove extra spaces that either surrounds or ending at beginning
-        lowercase: true // stores the input as lowercase
+        unique: true,
       },
       password: {
         type: String,
-        required: true
+        required: true,
       },
       fullName: {
         type: String,
         required: true,
-        trim: true
       },
       role: {
         type: String,
-        enum: ['user', 'admin'],
-        default: 'user'
+        enum: ['admin', 'user'],
+        default: 'user',
       },
-
-      
-    },
-    {
-      timestamps: true
-    }
-    
-  ),
-
+    })
   );

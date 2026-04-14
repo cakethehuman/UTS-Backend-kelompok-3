@@ -1,33 +1,68 @@
-const booksService = require('./books-service');
-const { errorResponder, errorTypes } = require('../../../core/errors');
+/* eslint-disable prettier/prettier */
+const ticketService = require('./tickets-service');
+// const { errorResponder, errorTypes } = require('../../../core/errors');
 
-async function getBooks(request, response, next) {
+async function getTickets(request, response, next) {
   try {
-    const books = await booksService.getBooks();
+    const tickets = await ticketService.getTickets();
 
-    return response.status(200).json(books);
+    return response.status(200).json(tickets);
   } catch (error) {
     return next(error);
   }
 }
 
-async function createBook(request, response, next) {
+async function getTicketById(request , response, next) {
   try {
-    const { title } = request.body;
+    const { id } = request.params;
+    const ticket = await ticketService.getTicketById(id);
 
-    if (!title) {
-      throw errorResponder(errorTypes.VALIDATION_ERROR, 'Title is required');
+    if (!ticket) {
+      return response.status(404).json({ message: 'Ticket not found' });
     }
 
-    const book = await booksService.create(title);
+    return response.status(200).json(ticket);   
+  }catch (error) {
+    return next(error);
+  }  
+}
 
-    return response.status(200).json(book);
+async function updateTicket(request, response, next) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+
+    const updatedTicket = await ticketService.updateTicket(id, updateData);
+
+    if (!updatedTicket) {
+      return response.status(404).json({ message: 'Ticket not found' });
+    }
+
+    return response.status(200).json(updatedTicket);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function deleteTicket(request, response, next) {
+  try {
+    const { id } = request.params;
+
+    const deletedTicket = await ticketService.deleteTicket(id);
+
+    if (!deletedTicket) {
+      return response.status(404).json({ message: 'Ticket not found' });
+    }
+
+    return response.status(200).json({ message: 'Ticket deleted successfully' });
   } catch (error) {
     return next(error);
   }
 }
 
 module.exports = {
-  getBooks,
-  createBook,
+  getTickets,
+  getTicketById,
+  updateTicket,
+  deleteTicket
 };
