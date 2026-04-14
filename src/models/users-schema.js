@@ -2,9 +2,6 @@ module.exports = (db) =>
   db.model(
     'Users',
     new db.Schema({
-      // email: String,
-      // password: String,
-      // fullName: String,
       email: {
         type: String,
         required: true,
