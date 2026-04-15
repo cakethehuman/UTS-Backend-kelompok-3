@@ -24,5 +24,9 @@ module.exports = (db) =>
         type: Number,
         required: true
       }
-    })
+    },
+    {
+      timestamps: true
+    }
+  )
   );
