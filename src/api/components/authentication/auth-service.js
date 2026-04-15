@@ -34,12 +34,12 @@ async function emailExists(email) {
 	return !!user; // Return true if user exists, false otherwise
 }
 
-async function register(email, password, fullName) {
+async function register(email, password, fullName, credit) {
 	if (await emailExists(email)) {
 		throw errorResponder(errorTypes.EMAIL_ALREADY_TAKEN, 'Email already exists');
 	}
 	const hashedPassword = await hashPassword(password);
-	return usersRepository.createUser(email, hashedPassword, fullName);
+	return usersRepository.createUser(email, hashedPassword, fullName, credit);
 }
 
 

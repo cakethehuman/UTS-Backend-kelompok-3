@@ -1,6 +1,6 @@
 const usersService = require('./users-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
-const {hashPassword, passwordMatched} = require('../../../utils/password');
+
 
 async function getUsers(request, response, next) {
 	try {
@@ -28,7 +28,7 @@ async function getUser(request, response, next) {
 
 async function createUser(request, response, next) {
 	try {
-		const {email, password, full_name: fullName, confirm_password: confirmPassword} = request.body;
+		const {email, password, full_name: fullName, confirm_password: confirmPassword, credit} = request.body;
 		const role = 'user';
 		// Email is required and cannot be empty
 		if (!email) {
@@ -55,11 +55,9 @@ async function createUser(request, response, next) {
 			throw errorResponder(errorTypes.VALIDATION_ERROR, 'Password and confirm password do not match');
 		}
 
-		// Hash the password before saving it to the database
-		const hashedPassword = await hashPassword(password);
 
 		// Create the user
-		const success = await usersService.createUser(email, hashedPassword, fullName, role);
+		const success = await usersService.createUser(email, password, fullName, credit);
 
 		if (!success) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to create user');
