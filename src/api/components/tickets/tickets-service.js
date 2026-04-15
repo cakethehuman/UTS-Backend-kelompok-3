@@ -16,9 +16,14 @@ async function deleteTicket(id) {
   return ticketsRepository.deleteTicket(id);
 }
 
+async function cancelTicket(ticketId, cancelData) {
+  return ticketsRepository.cancelTicket(ticketId, cancelData);
+}
+
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
+  cancelTicket,
 };

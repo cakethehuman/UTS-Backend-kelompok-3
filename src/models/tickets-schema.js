@@ -27,5 +27,11 @@ module.exports = (db) =>
         enum: ['reserved', 'open'],
         default: 'open',
       },
+
+      ticketStatus: {
+        type: String,
+        enum: ['active', 'used', 'disabled'],
+        default: 'active',
+      },
     })
   );

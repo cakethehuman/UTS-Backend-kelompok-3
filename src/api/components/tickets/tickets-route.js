@@ -18,4 +18,7 @@ module.exports = (app) => {
 
   // Delete a Ticket by id
   route.delete('/:id', ticketsController.deleteTicket);
+
+  // patch ticket by id
+  route.patch('/:id/cancel', ticketsController.cancelTicket);
 };
