@@ -15,4 +15,7 @@ module.exports = (app) => {
 
   // Get games by id
   route.get('/:id', verifyUser, gamesController.getGames);
+
+  // Get games seats
+  route.get('/:id/seats', verifyUser, gamesController.getSeats);
 };

@@ -3,7 +3,8 @@ module.exports = (db) =>
 		'Seats',
 		new db.Schema({
 			gameId: {
-				type: String,
+				type: db.Schema.Types.ObjectId,
+				ref: 'Game',
 				required: true,
 			},
 			seatNumber: {
