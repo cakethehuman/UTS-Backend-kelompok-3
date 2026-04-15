@@ -5,14 +5,17 @@ const gamesController = require('./games-controller');
 const route = express.Router();
 
 module.exports = (app) => {
-  app.use('/games', route);
+	app.use('/games', route);
 
-  // Get all games
-  route.get('/', gamesController.getGame);
-  
-  // make games (admin only later)
-  // route.post('/', gamesController.makeGame)
+	// Get all games
+	route.get('/', gamesController.getGame);
 
-  // Get games by id
-  route.get('/:id', gamesController.getGames);
+	// make games (admin only later)
+	route.post('/', gamesController.createGame);
+
+	// Get games by id
+	route.get('/:id', gamesController.getGames);
+
+	// Cheak seats
+	route.get('/:id/seats', gamesController.getSeats);
 };
