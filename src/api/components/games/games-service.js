@@ -1,14 +1,24 @@
-const usersRepository = require('./games-repository');
+const gamesRepository = require('./games-repository');
 
 async function getGames() {
-  return usersRepository.getGames();
+	return gamesRepository.getGames();
 }
 
 async function getGame(id) {
-  return usersRepository.getGame(id);
+	return gamesRepository.getGame(id);
+}
+
+async function getSeats(id) {
+	return gamesRepository.getSeats(id);
+}
+
+async function createGame(homeTeam, awayTeam, date, status) {
+	return gamesRepository.createGame(homeTeam, awayTeam, date, status);
 }
 
 module.exports = {
-  getGame,
-  getGames,
+	getGame,
+	getGames,
+	getSeats,
+	createGame,
 };
