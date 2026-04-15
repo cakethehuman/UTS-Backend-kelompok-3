@@ -1,5 +1,4 @@
 const authService = require('./auth-service');
-const { hashPassword } = require('../../../utils/password')
 const { errorResponder, errorTypes } = require('../../../core/errors');
 
 async function login(request, response, next) {
@@ -20,11 +19,18 @@ async function login(request, response, next) {
 }
 async function register(request, response, next){
     try {
-      const {email, password, confirmPassword, fullName} = request.body;
+      const {email, password, confirmPassword, fullName, credit} = request.body;
+      const user = authService.emailExists(email);
+      if (user){
+        throw errorResponder(
+          errorTypes.EMAIL_ALREADY_TAKEN,
+          'User with this email already exist!'
+        );
+      }
       if (!email || !password || !fullName || !confirmPassword){
         throw errorResponder(
           errorTypes.VALIDATION,
-          'Please provide an email, password, confirmPassword,  and fullName',
+          'Please provide an email, password, confirmPassword, and fullName',
         );
       }
       if (password !== confirmPassword){
@@ -39,10 +45,10 @@ async function register(request, response, next){
         'Password must be at least 8 characters long'
       );
     }
-      const hashedPassword = await hashPassword(password);
+
       const success = await authService.register(
         email, 
-        hashedPassword, 
+        password, 
         fullName
       )
       if (!success){
@@ -55,9 +61,10 @@ async function register(request, response, next){
     } catch (err){
         next(err)
     }
-  }  
+  }
+
 
   module.exports = {
     login,
-    register
+    register,
   }

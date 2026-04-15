@@ -3,15 +3,16 @@ const { errorResponder, errorTypes } = require('../core/errors');
 
 function authenticateToken(request, response, next) {
   const authHeader = request.headers.authorization;
+  
   const token = authHeader && authHeader.split(' ')[1]; // Bearer <token> 
   // returns token if authHeader is truthy, truthy in string case is it's not empty, the length is > 0
 
 
   if (!token) {
     return next(errorResponder(
-      errorTypes.NO_TOKEN),
+      errorTypes.NO_TOKEN,
       'Access token required'
-    );
+    ));
   }
   try {
     const user = verifyAccessToken(token)
@@ -25,6 +26,4 @@ function authenticateToken(request, response, next) {
   }
 }
 
-module.exports = {
-  authenticateToken,
-}
+module.exports = authenticateToken;

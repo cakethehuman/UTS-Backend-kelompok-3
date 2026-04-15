@@ -10,11 +10,9 @@ module.exports = (app) => {
   app.use('/auth', route);
 
   // register a new user
-  route.post('/register', authController.createUsers);
+  route.post('/register', authController.register);
   // login
   route.post('/login', authController.login);
-  // me
-  route.get('/me', authenticateToken, authController.me);
-  //
-  route.post('/logout', authController.logout);
+  // route.post('/logout', authController.logout);
 }
+

@@ -20,5 +20,9 @@ module.exports = (db) =>
         enum: ['admin', 'user'],
         default: 'user',
       },
+      credit: {
+        type: Number,
+        required: true
+      }
     })
   );
