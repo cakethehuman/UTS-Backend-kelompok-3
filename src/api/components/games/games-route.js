@@ -1,5 +1,5 @@
 const express = require('express');
-
+const verifyUser = require('../../../utils/AuthenticateToken')
 const gamesController = require('./games-controller');
 
 const route = express.Router();
@@ -7,15 +7,12 @@ const route = express.Router();
 module.exports = (app) => {
 	app.use('/games', route);
 
-	// Get all games
-	route.get('/', gamesController.getGame);
+  // Get all games
+  route.get('/', verifyUser, gamesController.getGame);
+  
+  // make games (admin only later)
+  // route.post('/', gamesController.makeGame)
 
-	// make games (admin only later)
-	route.post('/', gamesController.createGame);
-
-	// Get games by id
-	route.get('/:id', gamesController.getGames);
-
-	// Cheak seats
-	route.get('/:id/seats', gamesController.getSeats);
+  // Get games by id
+  route.get('/:id', verifyUser, gamesController.getGames);
 };

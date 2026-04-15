@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
  * @returns {string}
  */
 async function hashPassword(password) {
-  const saltRounds = 16;
+  const saltRounds = 16; // untuk salt jadinya tiap kali hash password ada salt + hash, agar susah dicrack
 
   const hashedPassword = await new Promise((resolve, reject) => {
     bcrypt.hash(password, saltRounds, (err, hash) => {
