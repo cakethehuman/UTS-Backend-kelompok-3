@@ -22,7 +22,8 @@ module.exports = (db) =>
       },
       credit: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
       }
     })
   );
