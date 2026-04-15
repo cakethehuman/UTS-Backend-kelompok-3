@@ -5,7 +5,7 @@ const gamesController = require('./games-controller');
 const route = express.Router();
 
 module.exports = (app) => {
-  app.use('/games', route);
+	app.use('/games', route);
 
   // Get all games
   route.get('/', verifyUser, gamesController.getGame);
