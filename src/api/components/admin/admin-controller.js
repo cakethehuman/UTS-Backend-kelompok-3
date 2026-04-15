@@ -1,5 +1,22 @@
 const adminService = require('./admin-service');
+const {generateSeats} = require('../../../utils/seatGenerator');
 const {errorResponder, errorTypes} = require('../../../core/errors');
+
+//create seats
+async function createSeat(request, response, next) {
+	try {
+		const {seatsInfo} = request.body;
+
+		const seats = await adminService.createSeat(seatsInfo);
+
+		if (!seats) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed cant make seats');
+		}
+		return response.status(201).json({message: 'Berasil taro seats'});
+	} catch (error) {
+		next(error);
+	}
+}
 
 async function createGames(request, response, next) {
 	try {
@@ -27,6 +44,8 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to create a game');
 		}
 
+		const seats = await generateSeats(success._id);
+		adminService.createSeats(seats);
 		return response.status(201).json({message: 'Games created successfully'});
 	} catch (error) {
 		return next(error);
@@ -48,4 +67,5 @@ async function createTickets(request, response, next) {
 module.exports = {
 	createGames,
 	createTickets,
+	createSeat,
 };

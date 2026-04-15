@@ -7,11 +7,11 @@ const route = express.Router();
 module.exports = (app) => {
   app.use('/users', route);
 
-  // Get list of users
-  route.get('/', usersController.getUsers);
+  // // Get list of users
+  // route.get('/', usersController.getUsers);
 
-  // Create a new user
-  route.post('/', usersController.createUser);
+  // // Create a new user
+  // route.post('/', usersController.createUser);
 
   // Get user detail
   route.get('/:id', usersController.getUser);

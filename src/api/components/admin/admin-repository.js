@@ -1,8 +1,11 @@
+const {Seats} = require('../../../models');
 const {Games} = require('../../../models');
 const {Tickets} = require('../../../models');
 
-// for games and seats
-async function createGames(homeTeam, awayTeam, date, status) {
+async function createSeats(seatsInfo) {
+	return Seats.create(seatsInfo);
+}
+async function createGame(homeTeam, awayTeam, date, status) {
 	return Games.create({homeTeam, awayTeam, date, status});
 }
 
@@ -11,6 +14,7 @@ async function createTickets(match, seatId, price, date, status) {
 }
 
 module.exports = {
-	createGames,
+	createGame,
 	createTickets,
+	createSeats,
 };
