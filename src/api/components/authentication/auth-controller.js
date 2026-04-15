@@ -1,5 +1,6 @@
 const authService = require('./auth-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
+const jwt = require('jsonwebtoken');
 
 async function login(request, response, next) {
   // checking incomplete body
@@ -63,8 +64,40 @@ async function register(request, response, next){
     }
   }
 
+async function getMe(request, response) {
+
+  //   const authHeader = request.headers.authorization;
+
+  //   if (!authHeader) {
+  //     return response.status(401).json({
+  //       message: "Token required"
+  //     });
+  //   }
+  //   const token = authHeader.split(" ")[1];
+  //   const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  //   const user = await authService.getMe(decoded.id);
+
+  //   return response.status(200).json(user);
+  // } catch (err) {
+  //   return response.status(403).json({
+  //     message: "Invalid token"
+  //   });
+    if (!request.user){
+      return response.status(401).json({
+        message: "Token required"
+      });
+    }
+    return response.status(200).json(
+      request.user
+    );
+
+}
+
+
 
   module.exports = {
     login,
     register,
+    getMe
   }

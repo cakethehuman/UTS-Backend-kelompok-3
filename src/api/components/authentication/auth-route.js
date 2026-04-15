@@ -14,5 +14,8 @@ module.exports = (app) => {
   // login
   route.post('/login', authController.login);
   // route.post('/logout', authController.logout);
+  
+  // endpoint to retrieve user's data
+  route.get('/me', authenticateToken, authController.getMe);
 }
 
