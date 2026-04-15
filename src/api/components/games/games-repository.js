@@ -11,7 +11,7 @@ async function getGame(id) {
 }
 
 async function getSeats(id) {
-	return Seats.findOne({gameId: id});
+	return Seats.find({gameId: id});
 }
 
 async function createGame(homeTeam, awayTeam, date, status) {

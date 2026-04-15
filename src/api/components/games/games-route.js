@@ -8,13 +8,13 @@ module.exports = (app) => {
 	app.use('/games', route);
 
   // Get all games
-  route.get('/', verifyUser, gamesController.getGame);
+  route.get('/', verifyUser, gamesController.getGames);
   
   // make games (admin only later)
   // route.post('/', gamesController.makeGame)
 
   // Get games by id
-  route.get('/:id', verifyUser, gamesController.getGames);
+  route.get('/:id', verifyUser, gamesController.getGame);
 
   // Get games seats
   route.get('/:id/seats', verifyUser, gamesController.getSeats);

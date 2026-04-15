@@ -14,7 +14,7 @@ async function getGames(request, response, next) {
 
 async function getGame(request, response, next) {
 	try {
-		const user = await gamesService.getGames(request.params.id);
+		const user = await gamesService.getGame(request.params.id);
 
 		if (!user) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
