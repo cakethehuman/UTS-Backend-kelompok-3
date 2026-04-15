@@ -7,7 +7,7 @@ function authenticateToken(request, response, next) {
   const token = authHeader && authHeader.split(' ')[1]; // Bearer <token> 
   // returns token if authHeader is truthy, truthy in string case is it's not empty, the length is > 0
 
-
+// "Bearer <token>" => ["Bearer", "<token>"]
   if (!token) {
     return next(errorResponder(
       errorTypes.NO_TOKEN,

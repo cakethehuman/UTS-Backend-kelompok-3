@@ -21,8 +21,11 @@ async function login(request, response, next) {
 async function register(request, response, next){
     try {
       const {email, password, confirmPassword, fullName, credit} = request.body;
-      const user = authService.emailExists(email);
+      const user = await authService.emailExists(email);
       if (user){
+        console.log("Hellooo");
+        console.log("Hellooooo");
+        console.log("Heloooo");
         throw errorResponder(
           errorTypes.EMAIL_ALREADY_TAKEN,
           'User with this email already exist!'
@@ -46,12 +49,18 @@ async function register(request, response, next){
         'Password must be at least 8 characters long'
       );
     }
-
+      if (credit < 0){
+        throw errorResponder(
+          errorTypes.VALIDATION_ERROR,
+          'Credit must be at least 0'
+        );
+      }
       const success = await authService.register(
         email, 
         password, 
-        fullName
-      )
+        fullName,
+        credit
+      );
       if (!success){
         throw errorResponder(
           errorTypes.UNPROCESSABLE_ENTITY,
