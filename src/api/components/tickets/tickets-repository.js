@@ -16,9 +16,14 @@ async function deleteTicket(id) {
   return Tickets.findByIdAndDelete(id);
 }
 
+async function findTicketsbyId(id) {
+  return Tickets.find(id)
+}
+
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
+  findTicketsbyId
 };
