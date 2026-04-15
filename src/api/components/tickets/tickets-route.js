@@ -1,6 +1,7 @@
 const express = require('express');
 const verifyLogin = require('../../../utils/AuthenticateToken');
 const ticketsController = require('./tickets-controller');
+const authenticateToken = require('../../../utils/AuthenticateToken');
 
 const route = express.Router();
 
@@ -9,6 +10,9 @@ module.exports = (app) => {
 
   // Get tickets lists
   route.get('/', verifyLogin, ticketsController.getTickets);
+  
+  // Get ticket in hand
+  route.get('/me', authenticateToken, ticketsController.getMyTicket);
 
   // Get a Ticket by id
   route.get('/:id', verifyLogin, ticketsController.getTicketById);
@@ -18,4 +22,5 @@ module.exports = (app) => {
 
   // Delete a Ticket by id
   route.delete('/:id', ticketsController.deleteTicket);
+
 };

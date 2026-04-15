@@ -60,9 +60,21 @@ async function deleteTicket(request, response, next) {
   }
 }
 
+async function getMyTicket(request, response, next) {
+  try {
+    const { id } = request.params.id;
+
+    const tickets = await ticketService.getTicketsById(id)
+    response.status(200).json({message: tickets})
+  } catch (err){
+    next(err)
+  }
+}
+
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
-  deleteTicket
+  deleteTicket,
+  getMyTicket
 };
