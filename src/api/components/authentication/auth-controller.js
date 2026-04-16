@@ -23,9 +23,6 @@ async function register(request, response, next){
       const {email, password, confirmPassword, fullName, credit} = request.body;
       const user = await authService.emailExists(email);
       if (user){
-        console.log("Hellooo");
-        console.log("Hellooooo");
-        console.log("Heloooo");
         throw errorResponder(
           errorTypes.EMAIL_ALREADY_TAKEN,
           'User with this email already exist!'
