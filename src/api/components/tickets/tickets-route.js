@@ -14,6 +14,9 @@ module.exports = (app) => {
   // Get ticket in hand
   route.get('/me', authenticateToken, ticketsController.getMyTicket);
 
+  // beli tiket
+  route.post('/', verifyLogin, ticketsController.buyTicket);
+
   // Get a Ticket by id
   route.get('/:id', verifyLogin, ticketsController.getTicketById);
 

@@ -4,8 +4,9 @@ module.exports = (db) =>
 		'Tickets',
 		new db.Schema(
 			{
-				match: {
-					type: String,
+				gameId: {
+					type: db.Schema.Types.ObjectId,
+					ref: 'Games',
 					required: true,
 				},
 				seatId: {
@@ -17,10 +18,6 @@ module.exports = (db) =>
 					type: Number,
 					required: true,
 					min: 0,
-				},
-				date: {
-					type: Date,
-					required: true,
 				},
 				status: {
 					type: String,
