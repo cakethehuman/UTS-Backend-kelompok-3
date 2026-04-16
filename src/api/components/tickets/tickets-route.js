@@ -10,6 +10,9 @@ module.exports = (app) => {
   // Get tickets lists
   route.get('/', verifyLogin, ticketsController.getTickets);
 
+  // beli tiket
+  route.post('/', verifyLogin, ticketsController.buyTicket);
+
   // Get a Ticket by id
   route.get('/:id', verifyLogin, ticketsController.getTicketById);
 

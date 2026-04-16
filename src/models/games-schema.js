@@ -3,19 +3,28 @@ module.exports = (db) =>
 		'Games',
 		new db.Schema({
 			homeTeam: {
-				type: String,
+				type: db.Schema.Types.ObjectId,
+				ref: 'Teams',
 				required: true,
 			},
 			awayTeam: {
-				type: String,
+				type: db.Schema.Types.ObjectId,
+				ref: 'Teams',
+				required: true,
+			},
+			location: {
+				type: db.Schema.Types.ObjectId,
+				ref: 'Teams',
 				required: true,
 			},
 			date: {
-				type: String, 
+				type: String,
 				required: true,
 			},
 			status: {
 				type: String,
+				enum: ['scheduled', 'live', 'finished', 'cancelled'],
+				default: 'scheduled',
 				required: true,
 			},
 		})

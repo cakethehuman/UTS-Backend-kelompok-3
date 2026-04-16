@@ -2,6 +2,19 @@ const adminService = require('./admin-service');
 const {generateSeats} = require('../../../utils/seatGenerator');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 
+// make teams
+async function createTeams(request, response, next) {
+	try {
+		const {name, abbreviation, vanue, state, city} = request.body;
+
+		const teams = await adminService.createTeams(name, abbreviation, vanue, state, city);
+
+		return response.status(201).json({message: 'Berasil membuat team'});
+	} catch (error) {
+		next(error);
+	}
+}
+
 //create seats
 async function createSeat(request, response, next) {
 	try {
@@ -18,9 +31,11 @@ async function createSeat(request, response, next) {
 	}
 }
 
+// create games
 async function createGames(request, response, next) {
 	try {
 		const {homeTeam, awayTeam, date, status} = request.body;
+		const location = homeTeam;
 
 		if (!homeTeam) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a home team');
@@ -38,7 +53,7 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need game status');
 		}
 
-		const success = await adminService.createGame(homeTeam, awayTeam, date, status);
+		const success = await adminService.createGame(homeTeam, awayTeam, location, date, status);
 
 		if (!success) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to create a game');
@@ -52,6 +67,7 @@ async function createGames(request, response, next) {
 	}
 }
 
+// make tickets
 async function createTickets(request, response, next) {
 	try {
 		const {match, seatId, price, date, status} = request.body;
@@ -68,4 +84,5 @@ module.exports = {
 	createGames,
 	createTickets,
 	createSeat,
+	createTeams,
 };

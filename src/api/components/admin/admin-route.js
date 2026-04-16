@@ -1,6 +1,6 @@
 const express = require('express');
 
-const usersController = require('./admin-controller');
+const adminController = require('./admin-controller');
 
 const route = express.Router();
 
@@ -13,10 +13,13 @@ module.exports = (app) => {
 	// Seats
 	// route.get('/games/:id/seats', usersController.getSeats)
 
+	// make teams
+	route.post('/teams', adminController.createTeams)
+
 	// GAMES
 	// Make a game
-	route.post('/games', usersController.createGames);
+	route.post('/games', adminController.createGames);
 
 	// Make a ticket
-	route.post('/tickets', usersController.createTickets);
+	route.post('/tickets', adminController.createTickets);
 };
