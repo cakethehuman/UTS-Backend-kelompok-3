@@ -42,6 +42,10 @@ Butuh menggunakan get
 
 4.  melihat history gacha dari suatu user : http://localhost:5000/api/users/:id/history
 butuh menggunakan get serta menaruh id dari user di :id
+cth :
+```
+http://localhost:5000/api/users/69e104b4dca912ee64cf018a/history
+```
 
 5. melihat sisa prize yang bisa didapatkan : http://localhost:5000/api/users/prizes
 menggunakan get
