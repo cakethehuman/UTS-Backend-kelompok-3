@@ -20,10 +20,19 @@ async function deleteTicket(id) {
 	return ticketsRepository.deleteTicket(id);
 }
 
+async function findTicketsbyId(id) {
+  return ticketsRepository.findTicketsbyId(id);
+}
+
 module.exports = {
 	getTickets,
 	getTicketById,
 	updateTicket,
 	deleteTicket,
 	buyTicket,
+  getTickets,
+  getTicketById,
+  updateTicket,
+  deleteTicket,
+  findTicketsbyId
 };

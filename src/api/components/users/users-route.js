@@ -1,6 +1,7 @@
 const express = require('express');
 
 const usersController = require('./users-controller');
+const authenticateToken = require('../../../utils/AuthenticateToken');
 
 const route = express.Router();
 
