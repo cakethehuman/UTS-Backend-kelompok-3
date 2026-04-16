@@ -1,6 +1,18 @@
 /* eslint-disable prettier/prettier */
+const { response, request } = require('express');
 const ticketService = require('./tickets-service');
 const { errorResponder, errorTypes } = require('../../../core/errors');
+async function buyTicket(request, response, next) {
+  try{
+    const {gameId,seatId,price,status} = request.body;
+    const tiket = await ticketService.buyTicket(gameId,seatId,price,status);
+
+    return response.status(201).json({message : "tiket berasil di beli"})
+  } catch(error){
+    return next(error);
+  }
+}
+
 
 async function getTickets(request, response) {
   try {
@@ -76,10 +88,23 @@ async function cancelTicket(request, response) {
   }
 }
 
+async function getMyTicket(request, response, next) {
+  try {
+    const { id } = request.params.id;
+
+    const tickets = await ticketService.getTicketsById(id)
+    response.status(200).json({message: tickets})
+  } catch (err){
+    next(err)
+  }
+}
+
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
   cancelTicket,
+  buyTicket
+  getMyTicket
 };

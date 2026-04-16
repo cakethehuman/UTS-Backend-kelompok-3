@@ -166,7 +166,12 @@ const errorTypes = {
     description: 'There\'s some error occuring when validating the new password!',
     status: 400,
     code: 'PASSWORD_ALTER_VALIDATION_ERROR',
-  }
+  },
+  NO_TOKEN: {
+    description: 'NO TOKEN, authentication failed!',
+    status: 400,
+    code: 'NO_TOKEN_VALIDATION_ERROR',
+  },
 };
 
 const errorResponder = (errorType, message = '') => {

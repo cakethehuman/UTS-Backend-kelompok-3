@@ -2,9 +2,6 @@ module.exports = (db) =>
   db.model(
     'Users',
     new db.Schema({
-      // email: String,
-      // password: String,
-      // fullName: String,
       email: {
         type: String,
         required: true,
@@ -23,5 +20,14 @@ module.exports = (db) =>
         enum: ['admin', 'user'],
         default: 'user',
       },
-    })
+      credit: {
+        type: Number,
+        required: true,
+        default: 0
+      }
+    },
+    {
+      timestamps: true
+    }
+  )
   );
