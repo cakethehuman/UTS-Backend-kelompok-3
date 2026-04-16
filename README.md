@@ -46,5 +46,5 @@ butuh menggunakan get serta menaruh id dari user di :id
 5. melihat sisa prize yang bisa didapatkan : http://localhost:5000/api/users/prizes
 menggunakan get
 
-6. melihat semua user yang berasil mendapatkan hadiah : http://localhost:5000/api/ users/history/winners
+6. melihat semua user yang berasil mendapatkan hadiah : http://localhost:5000/api/users/history/winners
 menggunakan get
