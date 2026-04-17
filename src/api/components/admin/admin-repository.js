@@ -3,6 +3,10 @@ const {Games} = require('../../../models');
 const {Tickets} = require('../../../models');
 const {Teams} = require('../../../models');
 
+async function getTickets() {
+	return Tickets.find({}).populate([{path: 'userInfo', select: 'fullName -_id'}, {path: 'gameInfo', select: 'homeTeam awayTeam -_id'}]);
+}
+
 async function createTeams(name, abbreviation, vanue, state, city) {
 	return Teams.create({name, abbreviation, vanue, state, city});
 }
@@ -23,4 +27,5 @@ module.exports = {
 	createTickets,
 	createSeats,
 	createTeams,
+	getTickets,
 };

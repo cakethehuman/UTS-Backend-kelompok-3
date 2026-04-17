@@ -7,19 +7,22 @@ const route = express.Router();
 module.exports = (app) => {
 	app.use('/admin', route);
 
-	// make seats
-	// route.get();
-
-	// Seats
-	// route.get('/games/:id/seats', usersController.getSeats)
+	// see all the tickets that have been made
+	route.get('/tickets', adminController.getTickets);
 
 	// make teams
-	route.post('/teams', adminController.createTeams)
+	route.post('/teams', adminController.createTeams);
+
+	// update teams
 
 	// GAMES
 	// Make a game
 	route.post('/games', adminController.createGames);
 
-	// Make a ticket
+	// update teams
+
+	// update seats
+
+	// update ticket
 	route.post('/tickets', adminController.createTickets);
 };

@@ -1,9 +1,5 @@
 const ticketsRepository = require('./tickets-repository');
 
-async function buyTicket(gameId,seatId,price,status) {
-	return ticketsRepository.buyTicket(gameId,seatId,price,status);
-}
-
 async function getTickets() {
 	return ticketsRepository.getTickets();
 }
@@ -33,11 +29,10 @@ module.exports = {
 	getTicketById,
 	updateTicket,
 	deleteTicket,
-	buyTicket,
   getTickets,
   getTicketById,
   updateTicket,
   deleteTicket,
   cancelTicket,
-  findTicketsbyId
+  findTicketsbyId,
 };

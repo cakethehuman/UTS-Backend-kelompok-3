@@ -4,9 +4,13 @@ const {createSeat} = require('../admin/admin-repository');
 
 async function getGames(request, response, next) {
 	try {
-		const users = await gamesService.getGames();
+		const games = await gamesService.getGames();
 
-		return response.status(200).json(users);
+		if(!games){
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Games not found');
+		}
+
+		return response.status(200).json(games);
 	} catch (error) {
 		return next(error);
 	}
