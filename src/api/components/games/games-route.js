@@ -10,12 +10,9 @@ module.exports = (app) => {
   // Get all games
   route.get('/', verifyUser, gamesController.getGames);
   
-  // make games (admin only later)
-  // route.post('/', gamesController.makeGame)
-
   // Get games by id
   route.get('/:id', verifyUser, gamesController.getGame);
 
-  // Get games seats
+  // Get seats in the game
   route.get('/:id/seats', verifyUser, gamesController.getSeats);
 };

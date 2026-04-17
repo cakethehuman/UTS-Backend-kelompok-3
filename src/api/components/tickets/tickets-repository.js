@@ -1,9 +1,5 @@
 const {Tickets} = require('../../../models');
 
-async function buyTicket(gameId, seatId, price, status) {
-	return Tickets.create({gameId, seatId, price, status});
-}
-
 async function getTickets() {
 	return Tickets.find({});
 }
@@ -21,11 +17,11 @@ async function deleteTicket(id) {
 }
 
 async function findTicketsbyId(id) {
-  return Tickets.find(id)
+	return Tickets.find(id);
 }
 
 async function cancelTicket(id) {
-  return Tickets.findByIdAndUpdate(id, {status: 'cancelled'}, {new: true});
+	return Tickets.findByIdAndUpdate(id, {status: 'cancelled'}, {new: true});
 }
 
 module.exports = {
@@ -33,11 +29,10 @@ module.exports = {
 	getTicketById,
 	updateTicket,
 	deleteTicket,
-	buyTicket,
-  getTickets,
-  getTicketById,
-  updateTicket,
-  deleteTicket,
-  cancelTicket,
-  findTicketsbyId
+	getTickets,
+	getTicketById,
+	updateTicket,
+	deleteTicket,
+	cancelTicket,
+	findTicketsbyId,
 };

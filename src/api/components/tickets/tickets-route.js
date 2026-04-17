@@ -8,15 +8,12 @@ const route = express.Router();
 module.exports = (app) => {
   app.use('/tickets', route);
 
-  // Get tickets lists
-  route.get('/', verifyLogin, ticketsController.getTickets);
+  // // Get tickets lists
+  // route.get('/', verifyLogin, ticketsController.getTickets);
   
   // Get ticket in hand
   route.get('/me', authenticateToken, ticketsController.getMyTicket);
-
-  // beli tiket
-  route.post('/', verifyLogin, ticketsController.buyTicket);
-
+  
   // Get a Ticket by id
   route.get('/:id', verifyLogin, ticketsController.getTicketById);
 

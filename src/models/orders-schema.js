@@ -1,22 +1,27 @@
 /* eslint-disable prettier/prettier */
 module.exports = (db) =>
 	db.model(
-		'Tickets',
+		'Orders',
 		new db.Schema({
-			userInfo: {
+			userId: {
 				type: db.Schema.Types.ObjectId,
 				ref: 'Users',
 				required: true,
 			},
-			gameInfo: {
+			gameId: {
 				type: db.Schema.Types.ObjectId,
 				ref: 'Games',
 				required: true,
 			},
-			seatInfo: {
+			seatId: {
 				type: db.Schema.Types.ObjectId,
 				ref: 'Seats',
 				required: true,
+			},
+			status: {
+				type: String,
+				enum: ['pending', 'paid', 'cancelled', 'expired'],
+				default: 'pending',
 			},
 		})
 	);

@@ -2,16 +2,6 @@
 const {response, request} = require('express');
 const ticketService = require('./tickets-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
-async function buyTicket(request, response, next) {
-	try {
-		const {gameId, seatId, price, status} = request.body;
-		const tiket = await ticketService.buyTicket(gameId, seatId, price, status);
-
-		return response.status(201).json({message: 'tiket berasil di beli'});
-	} catch (error) {
-		return next(error);
-	}
-}
 
 async function getTickets(request, response) {
 	try {
@@ -28,7 +18,7 @@ async function getTicketById(request, response) {
 		const ticket = await ticketService.getTicketById(id);
 
 		if (!ticket) {
-			return errorResponder(response, 'Ticket not found', errorTypes.NOT_FOUND);
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Ticket not found');
 		}
 
 		return response.status(200).json(ticket);
@@ -103,6 +93,5 @@ module.exports = {
 	updateTicket,
 	deleteTicket,
 	cancelTicket,
-	buyTicket,
 	getMyTicket,
 };
