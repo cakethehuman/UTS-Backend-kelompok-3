@@ -195,7 +195,7 @@ async function changePassword(request, response, next) {
       throw errorResponder(
         errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 
         'New password confirmation must be same as the new password');
-    }
+      }
     
     const hashedPassword = await hashPassword(newPassword);
     const success = await usersService.changePassword(id, hashedPassword);
@@ -203,8 +203,7 @@ async function changePassword(request, response, next) {
     if (!success){
       return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ''));
     }
-  }
-  catch (error){
+  } catch (error) {
     return next(error);
   }
   return response.status(200).json({message: 'Password successfully changed!'})
@@ -233,7 +232,7 @@ async function deleteUser(request, response, next) {
       );
     }
 
-    return response.status(200).json({ message: 'User deleted successfully' });
+    return response.status(200).json({message: 'User deleted successfully'});
   } catch (error) {
     return next(error);
   }

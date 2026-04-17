@@ -44,25 +44,8 @@ async function updateTicket(request, response, next) {
   }
 }
 
-async function deleteTicket(request, response, next) {
-  try {
-    const { id } = request.params;
-
-    const deletedTicket = await ticketService.deleteTicket(id);
-
-    if (!deletedTicket) {
-      return response.status(404).json({ message: 'Ticket not found' });
-    }
-
-    return response.status(200).json({ message: 'Ticket deleted successfully' });
-  } catch (error) {
-    return next(error);
-  }
-}
-
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
-  deleteTicket
 };

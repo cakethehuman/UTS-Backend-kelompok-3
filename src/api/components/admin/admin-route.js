@@ -12,4 +12,7 @@ module.exports = (app) => {
 
   // Make a ticket
   route.post('/tickets', usersController.createTickets);
+
+  // Delete a Ticket by id
+  route.delete('/tickets/:id', usersController.deleteTicket);
 };

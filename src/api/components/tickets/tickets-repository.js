@@ -12,13 +12,8 @@ async function updateTicket(id, updateData) {
   return Tickets.findByIdAndUpdate(id, updateData, {new: true});
 }
 
-async function deleteTicket(id) {
-  return Tickets.findByIdAndDelete(id);
-}
-
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
-  deleteTicket,
 };

@@ -15,7 +15,4 @@ module.exports = (app) => {
 
   // Ticket by id
   route.put('/:id', ticketsController.updateTicket);
-
-  // Delete a Ticket by id
-  route.delete('/:id', ticketsController.deleteTicket);
 };

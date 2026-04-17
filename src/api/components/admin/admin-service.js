@@ -15,7 +15,12 @@ async function createTickets(match, seatId, price, gameTimeAndDate, status) {
   );
 }
 
+async function deleteTicket(id) {
+  return adminRepository.deleteTicket(id);
+}
+
 module.exports = {
   createGames,
   createTickets,
+  deleteTicket,
 };

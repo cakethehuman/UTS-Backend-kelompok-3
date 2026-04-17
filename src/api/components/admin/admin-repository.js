@@ -9,6 +9,9 @@ async function createTickets(match, seatId, price, gameTimeAndDate, status) {
   return Tickets.create({match, seatId, price, gameTimeAndDate, status});
 }
 
+async function deleteTicket(id) {
+  return Tickets.findByIdAndDelete(id);
+}
 // async function getUserByEmail(email) {
 //   return Users.findOne({ email });
 // }
@@ -16,4 +19,5 @@ async function createTickets(match, seatId, price, gameTimeAndDate, status) {
 module.exports = {
   createGames,
   createTickets,
+  deleteTicket,
 };

@@ -12,13 +12,8 @@ async function updateTicket(id, updateData) {
   return ticketsRepository.updateTicket(id, updateData);
 }
 
-async function deleteTicket(id) {
-  return ticketsRepository.deleteTicket(id);
-}
-
 module.exports = {
   getTickets,
   getTicketById,
   updateTicket,
-  deleteTicket,
 };
