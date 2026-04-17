@@ -39,10 +39,14 @@ async function register(email, password, fullName, credit) {
 	return usersRepository.createUser(email, hashedPassword, fullName, credit);
 }
 
+async function changePassword(userId, newPassword) {
+	return usersRepository.changePassword(userId, newPassword);
+}
 
 
 module.exports = {
 	login,
 	register,
-	emailExists
+	emailExists,
+	changePassword
 };
