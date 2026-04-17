@@ -1,7 +1,7 @@
 const express = require('express');
 const verifyLogin = require('../../../utils/AuthenticateToken');
 const ordersController = require('./orders-controller');
-const authenticateToken = require('../../../utils/AuthenticateToken');
+
 
 const route = express.Router();
 

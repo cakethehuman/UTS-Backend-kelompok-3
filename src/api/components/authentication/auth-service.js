@@ -8,11 +8,8 @@ async function login(email, password) {
 	if (!user) {
 		throw errorResponder(errorTypes.INVALID_CREDENTIALS, "Didn't found the user with specified email!");
 	}
-	// console.log(password);
-	// console.log(user.password);
-	// console.log(await hashPassword(password));
+
 	const match = await passwordMatched(password, user.password);
-	console.log(match);
 	if (!match) {
 		throw errorResponder(errorTypes.INVALID_PASSWORD, 'Incorrect password!');
 	}

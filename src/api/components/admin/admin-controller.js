@@ -2,6 +2,7 @@ const adminService = require('./admin-service');
 const {generateSeats} = require('../../../utils/seatGenerator');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 
+
 // see all tickets
 async function getTickets(request, response, next) {
 	try {
