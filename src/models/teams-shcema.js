@@ -11,7 +11,7 @@ module.exports = (db) =>
 				type: String,
 				required: true,
 			},
-			vanue : {
+			venue : {
 				type: String,
 				required: true,
 			},

@@ -4,11 +4,14 @@ const {Tickets} = require('../../../models');
 const {Teams} = require('../../../models');
 
 async function getTickets() {
-	return Tickets.find({}).populate([{path: 'userInfo', select: 'fullName -_id'}, {path: 'gameInfo', select: 'homeTeam awayTeam -_id'}]);
+	return Tickets.find({}).populate([
+		{path: 'userInfo', select: 'fullName -_id'},
+		{path: 'gameInfo', select: 'homeTeam awayTeam -_id'},
+	]);
 }
 
-async function createTeams(name, abbreviation, vanue, state, city) {
-	return Teams.create({name, abbreviation, vanue, state, city});
+async function createTeams(name, abbreviation, venue, state, city) {
+	return Teams.create({name, abbreviation, venue, state, city});
 }
 
 async function createSeats(seatsInfo) {

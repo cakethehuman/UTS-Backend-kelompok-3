@@ -5,8 +5,8 @@ async function getTickets() {
 	return adminRepository.getTickets();
 }
 
-async function createTeams(name, abbreviation, vanue, state, city) {
-	return adminRepository.createTeams(name, abbreviation, vanue, state, city);
+async function createTeams(name, abbreviation, venue, state, city) {
+	return adminRepository.createTeams(name, abbreviation, venue, state, city);
 }
 
 async function createSeats(seatsInfo) {

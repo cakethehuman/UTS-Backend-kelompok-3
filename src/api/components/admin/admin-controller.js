@@ -15,9 +15,9 @@ async function getTickets(request, response, next) {
 // make teams
 async function createTeams(request, response, next) {
 	try {
-		const {name, abbreviation, vanue, state, city} = request.body;
+		const {name, abbreviation, venue, state, city} = request.body;
 
-		const teams = await adminService.createTeams(name, abbreviation, vanue, state, city);
+		const teams = await adminService.createTeams(name, abbreviation, venue, state, city);
 
 		return response.status(201).json({message: 'Team has been made'});
 	} catch (error) {
