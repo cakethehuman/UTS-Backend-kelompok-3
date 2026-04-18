@@ -175,11 +175,16 @@ const errorTypes = {
 		status: 403,
 		code: 'INSUFFICIENT_CREDIT_ERROR',
 	},
-  ADMIN_ACCESS_REQUIRED: {
-    description: "You must be an admin too access this!",
-    status: 403,
-    code: 'ADMIN_ACCESS_REQUIRED_ERROR'
-  },
+	ADMIN_ACCESS_REQUIRED: {
+		description: 'You must be an admin too access this!',
+		status: 403,
+		code: 'ADMIN_ACCESS_REQUIRED_ERROR',
+	},
+	NAME_INVALID: {
+		description: 'Your name must be atleast one character!',
+		status: 403,
+		code: 'NAME_INVALID_ERROR',
+	},
 };
 
 const errorResponder = (errorType, message = '') => {

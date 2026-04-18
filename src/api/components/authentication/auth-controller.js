@@ -80,7 +80,7 @@ async function getMe(request, response) {
 async function changePassword(request, response, next) {
 	// TODO: Implement this function
 	const {userId} = request.params;
-	const {old_password: oldPassword, new_password: newPassword, confirm_new_password: confirmNewPassword} = request.body;
+	const {oldPassword: oldPassword, newPassword: newPassword, confirmNewPassword: confirmNewPassword} = request.body;
 	// Make sure that:
 	// - the user exists by checking the user ID
 	// - the old password is correct
@@ -92,19 +92,12 @@ async function changePassword(request, response, next) {
 	const matchOldPw = await passwordMatched(oldPassword, user.password);
 	const matchOldWithNewPw = await passwordMatched(newPassword, user.password);
 	try {
-		if (!user) {
-			throw errorResponder(errorTypes.VALIDATION_ERROR, 'Id is required!');
+		if (!user || !matchOldPw || matchOldWithNewPw) {
+			throw errorResponder(errorTypes.VALIDATION_ERROR, 'Something went wrong!');
 		}
 
-		if (!matchOldPw) {
-			throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'Old password is incorrect');
-		}
 		if (newPassword.length < 8) {
 			throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must be at least 8 characters!');
-		}
-
-		if (matchOldWithNewPw) {
-			throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'New password must not be same as the old password');
 		}
 
 		if (newPassword !== confirmNewPassword) {
@@ -112,7 +105,7 @@ async function changePassword(request, response, next) {
 		}
 
 		const hashedPassword = await hashPassword(newPassword);
-		const success = await usersService.changePassword(userId, hashedPassword);
+		const success = await authService.changePassword(userId, hashedPassword);
 
 		if (!success) {
 			return next(errorResponder(errorTypes.NOT_IMPLEMENTED, ''));
@@ -136,25 +129,17 @@ async function changePassword(request, response, next) {
 
 async function changeEmail(request, response, next) {
 	const {userId} = request.params;
-	const {curr_password: password, old_email: oldEmail, new_email: newEmail} = request.body;
+	const {newEmail, password: password} = request.body;
 
 	const user = await usersService.getUser(userId);
-	const userEmail = await authService.emailExists(newEmail);
-	const matchEmail = await emailMatched(oldEmail, user.email);
-	const matchPw = await passwordMatched(password, user.password);
 
+	//const userEmail = await authService.emailExists(newEmail);
+	//const matchEmail = await emailMatched(oldEmail, user.email);
+	const matchPw = await passwordMatched(password, user.password);
+	//|| userEmail || !matchEmail
 	try {
-		if (!user) {
-			throw errorResponder(errorTypes.VALIDATION_ERROR, 'Id is required!');
-		}
-		if (!matchPw) {
-			throw errorResponder(errorTypes.PASSWORD_ALTERING_VALIDATION_ERROR, 'Your current password is incorrect!');
-		}
-		if (userEmail) {
-			throw errorResponder(errorTypes.EMAIL_ALREADY_TAKEN, 'Email already exists!');
-		}
-		if (!matchEmail) {
-			throw errorResponder(errorTypes.ALERT, 'Your old email is wrong!');
+		if (!user || !matchPw) {
+			throw errorResponder(errorTypes.ALERT, 'Something is wrong!');
 		}
 		const success = await authService.changeEmail(userId, newEmail);
 	} catch (error) {
@@ -165,31 +150,26 @@ async function changeEmail(request, response, next) {
 
 async function changeFullName(request, response, next) {
 	const {userId} = request.params;
-	const user = await usersService.getUser(userId);
-	const {email: email, old_name: oldName, new_name: newName, password: password} = request.body;
-	const userName = await authService.fullNameExists(newName);
-	const matchName = await nameMatched(oldName, user.fullName);
-	const matchEmail = await emailMatched(email, user.email);
-	const matchPw = await passwordMatched(password, user.password);
+	const {newName, password: password} = request.body;
 
+	const user = await usersService.getUser(userId);
+
+	//const userEmail = await authService.emailExists(newEmail);
+	//const matchEmail = await emailMatched(oldEmail, user.email);
+	const matchPw = await passwordMatched(password, user.password);
+	//|| userEmail || !matchEmail
 	try {
-		if (!matchEmail) {
-			throw errorResponder(errorTypes.ALERT, 'Your email is wrong!');
+		if (!newName) {
+			throw errorResponder(errorTypes.NAME_INVALID, 'Mind your name!');
 		}
-		if (!matchPw) {
-			throw errorResponder(errorTypes.ALERT, 'Your password is wrong');
-		}
-		if (!matchName) {
-			throw errorResponder(errorTypes.ALERT, 'Your old name is wrong!');
-		}
-		if (userName) {
-			throw errorResponder(errorTypes.ALERT, 'Fullname is taken!');
+		if (!user || !matchPw) {
+			throw errorResponder(errorTypes.ALERT, 'Something is wrong!');
 		}
 		const success = await authService.changeFullName(userId, newName);
 	} catch (error) {
 		return next(error);
 	}
-	return response.status(200).json({message: 'Fullname successfully changed'});
+	return response.status(200).json({message: 'Name successfully changed'});
 }
 
 module.exports = {

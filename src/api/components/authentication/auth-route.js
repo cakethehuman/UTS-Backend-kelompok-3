@@ -20,11 +20,11 @@ module.exports = (app) => {
 	route.get('/me', authenticateToken, authController.getMe);
 
 	// change password
-	route.put('/changePassword/:userId', authController.changePassword);
+	route.patch('/:userId/password', authController.changePassword);
 
 	// change user's email
-	route.put('/changeEmail/:userId', authController.changeEmail);
+	route.patch('/:userId/email', authController.changeEmail);
 
 	// change username
-	route.put('/changeName/:userId', authController.changeFullName);
+	route.patch('/:userId/name', authController.changeFullName);
 };
