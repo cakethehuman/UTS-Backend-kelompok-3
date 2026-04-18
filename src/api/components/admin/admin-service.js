@@ -9,6 +9,15 @@ async function getTickets() {
 async function getTeamsById(id) {
 	return adminRepository.getTeamsById(id);
 }
+async function getUserById(id) {
+	return adminRepository.getUsersById(id);
+}
+async function getSeatsById(id) {
+	return adminRepository.getSeatsById(id);
+}
+async function getGamesById(id) {
+	return adminRepository.getGamesById(id);
+}
 
 async function createTeams(name, abbreviation, venue, state, city) {
 	return adminRepository.createTeams(name, abbreviation, venue, state, city);
@@ -18,22 +27,25 @@ async function createSeats(seatsInfo) {
 	return adminRepository.createSeats(seatsInfo);
 }
 
-async function createGame(homeTeamInfo, awayTeamInfo, date, status) {
-	return adminRepository.createGame(homeTeamInfo, awayTeamInfo, date, status);
+async function createGame(homeTeamInfo, awayTeamInfo, date) {
+	return adminRepository.createGame(homeTeamInfo, awayTeamInfo, date);
 }
 
-async function createTickets(match, seatId, price, date, status) {
-	return adminRepository.createTickets(match, seatId, price, date, status);
+async function createTickets(userInfo, gameInfo, seatInfo) {
+	return adminRepository.createTickets(userInfo, gameInfo, seatInfo);
 }
 
 async function deleteTicket(id) {
-  return adminRepository.deleteTicket(id);
+	return adminRepository.deleteTicket(id);
 }
 
 module.exports = {
 	getTeamsById,
-  createTickets,
-  deleteTicket,
+	getUserById,
+	getSeatsById,
+	getGamesById,
+	createTickets,
+	deleteTicket,
 	createGame,
 	createTickets,
 	createSeats,

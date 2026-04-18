@@ -3,7 +3,7 @@ const {Games} = require('../../../models');
 const {Seats} = require('../../../models');
 
 async function getGames() {
-	return Games.find({}).populate({path: 'homeTeam', select: 'name abbreviation -_id'}).populate({path: 'awayTeam', select: 'name abbreviation -_id'}).populate({path : "location", select: "city venue -_id"});
+	return Games.find({});
 }
 
 async function getGame(id) {

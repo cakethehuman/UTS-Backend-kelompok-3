@@ -13,9 +13,9 @@ module.exports = (db) =>
 				abbreviation: {type: String, required: true},
 			},
 			location: {
-				venue : {type: String, required: true},
-				city: String,
-				state: String,
+				venue: {type: String, required: true},
+				city: {type: String, required: true},
+				state: {type: String, required: true},
 			},
 			date: {
 				type: String,
