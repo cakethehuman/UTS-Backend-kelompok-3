@@ -1,8 +1,13 @@
 // admin service akan mengambil repository dari user
 const adminRepository = require('./admin-repository');
 
+// get functions
 async function getTickets() {
 	return adminRepository.getTickets();
+}
+
+async function getTeamsById(id) {
+	return adminRepository.getTeamsById(id);
 }
 
 async function createTeams(name, abbreviation, venue, state, city) {
@@ -13,8 +18,8 @@ async function createSeats(seatsInfo) {
 	return adminRepository.createSeats(seatsInfo);
 }
 
-async function createGame(homeTeam, awayTeam, location, date, status) {
-	return adminRepository.createGame(homeTeam, awayTeam, location, date, status);
+async function createGame(homeTeamInfo, awayTeamInfo, date, status) {
+	return adminRepository.createGame(homeTeamInfo, awayTeamInfo, date, status);
 }
 
 async function createTickets(match, seatId, price, date, status) {
@@ -26,7 +31,7 @@ async function deleteTicket(id) {
 }
 
 module.exports = {
-  createGames,
+	getTeamsById,
   createTickets,
   deleteTicket,
 	createGame,

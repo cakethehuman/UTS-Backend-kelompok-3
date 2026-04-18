@@ -78,7 +78,9 @@ async function createSeat(request, response, next) {
 async function createGames(request, response, next) {
 	try {
 		const {homeTeam, awayTeam, date, status} = request.body;
-		const location = homeTeam;
+
+		const homeTeamInfo = await adminService.getTeamsById(homeTeam);
+		const awayTeamInfo = await adminService.getTeamsById(awayTeam);
 
 		if (!homeTeam) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a home team');
@@ -96,7 +98,7 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need game status');
 		}
 
-		const success = await adminService.createGame(homeTeam, awayTeam, location, date, status);
+		const success = await adminService.createGame(homeTeamInfo, awayTeamInfo, date, status);
 
 		if (!success) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to create a game');
