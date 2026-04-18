@@ -1,31 +1,52 @@
-const gamesScheduleService = require('./games-service');
+const gamesService = require('./games-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
+const {createSeat} = require('../admin/admin-repository');
 
 async function getGames(request, response, next) {
-  try {
-    const users = await gamesScheduleService.getGames();
+	try {
+		const games = await gamesService.getGames();
 
-    return response.status(200).json(users);
-  } catch (error) {
-    return next(error);
-  }
+		if(!games){
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Games not found');
+		}
+
+		return response.status(200).json(games);
+	} catch (error) {
+		return next(error);
+	}
 }
 
 async function getGame(request, response, next) {
-  try {
-    const user = await gamesScheduleService.getGames(request.params.id);
+	try {
+		const user = await gamesService.getGame(request.params.id);
 
-    if (!user) {
-      throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
-    }
+		if (!user) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
+		}
 
-    return response.status(200).json(user);
-  } catch (error) {
-    return next(error);
-  }
+		return response.status(200).json(user);
+	} catch (error) {
+		return next(error);
+	}
+}
+
+async function getSeats(request, response, next) {
+	try {
+		const seats = await gamesService.getSeats(request.params.id);
+
+		if (!seats) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Seats not found');
+		}
+
+		return response.status(200).json(seats);
+	} catch (error) {
+		return next(error);
+	}
 }
 
 module.exports = {
-  getGame,
-  getGames,
+	getGame,
+	getGames,
+	getSeats,
+	getSeats,
 };
