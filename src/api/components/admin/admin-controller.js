@@ -94,11 +94,7 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add date');
 		}
 
-		if (!status) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need game status');
-		}
-
-		const success = await adminService.createGame(homeTeamInfo, awayTeamInfo, date, status);
+		const success = await adminService.createGame(homeTeamInfo, awayTeamInfo, date);
 
 		if (!success) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to create a game');
@@ -120,29 +116,25 @@ async function createGames(request, response, next) {
 // make tickets
 async function createTickets(request, response, next) {
 	try {
-		const {match, seatId, price, date, status} = request.body;
+		const {userId, gameId, seatId} = request.body;
 
-		if (!match) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a match');
+		if (!userId) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a usesrId');
+		}
+
+		if (!gameId) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a gameId');
 		}
 
 		if (!seatId) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a seatId');
 		}
 
-		if (!price) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a price');
-		}
+		const userInfo = await adminService.getUserById(userId);
+		const gameInfo = await adminService.getGamesById(gameId);
+		const seatInfo = await adminService.getSeatsById(seatId);
 
-		if (!date) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a date');
-		}
-
-		if (!status) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a status');
-		}
-
-		const tickets = await adminService.createTickets(match, seatId, price, date, status);
+		const tickets = await adminService.createTickets(userInfo, gameInfo, seatInfo);
 
 		if (!tickets) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to make tickets');
