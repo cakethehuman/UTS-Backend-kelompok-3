@@ -3,19 +3,19 @@ module.exports = (db) =>
 		'Games',
 		new db.Schema({
 			homeTeam: {
-				type: db.Schema.Types.ObjectId,
-				ref: 'Teams',
-				required: true,
+				teamId: {type: db.Schema.Types.ObjectId, ref: 'Teams', required: true},
+				name: {type: String, required: true},
+				abbreviation: {type: String, required: true},
 			},
 			awayTeam: {
-				type: db.Schema.Types.ObjectId,
-				ref: 'Teams',
-				required: true,
+				teamId: {type: db.Schema.Types.ObjectId, ref: 'Teams', required: true},
+				name: {type: String, required: true},
+				abbreviation: {type: String, required: true},
 			},
 			location: {
-				type: db.Schema.Types.ObjectId,
-				ref: 'Teams',
-				required: true,
+				venue : {type: String, required: true},
+				city: String,
+				state: String,
 			},
 			date: {
 				type: String,

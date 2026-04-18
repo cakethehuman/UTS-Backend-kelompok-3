@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 module.exports = (db) =>
 	db.model(
 		'Tickets',
