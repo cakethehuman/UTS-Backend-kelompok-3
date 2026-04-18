@@ -21,6 +21,7 @@ async function login(request, response, next) {
       next(err);
   }
 }
+
 async function register(request, response, next){
     try {
       const {email, password, confirmPassword, fullName, credit} = request.body;

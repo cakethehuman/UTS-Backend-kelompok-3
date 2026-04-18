@@ -5,7 +5,7 @@ const {Teams} = require('../../../models');
 
 async function getTickets() {
 	return Tickets.find({}).populate([
-		{path: 'userInfo', select: 'fullName -_id'},
+		{path: 'userInfo', select: 'email fullName -_id'},
 		{path: 'gameInfo', select: 'homeTeam awayTeam -_id'},
 	]);
 }
