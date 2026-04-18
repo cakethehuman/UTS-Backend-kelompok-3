@@ -8,6 +8,11 @@ async function getUser(id) {
 	return Users.findById(id);
 }
 
+async function addCredits(id, amount) {
+  const user = await getUser(id);
+  return Users.updateOne({_id: id}, {$set: {credit: newCredit}});
+}
+
 async function getUserByEmail(email) {
 	return Users.findOne({email});
 }
@@ -51,6 +56,7 @@ async function deleteUser(id) {
 module.exports = {
 	getUsers,
 	getUser,
+	addCredits,
 	getUserByEmail,
 	createUser,
 	updateUser,

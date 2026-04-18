@@ -8,6 +8,10 @@ const route = express.Router();
 module.exports = (app) => {
 	app.use('/users', route);
 
+  route.post('/:id/balance', usersController.addCredits);
+
+  // // Get list of users
+  // route.get('/', usersController.getUsers);
 	// // Get list of users
 	// route.get('/', usersController.getUsers);
 

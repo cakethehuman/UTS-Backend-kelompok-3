@@ -8,6 +8,12 @@ async function getUser(id) {
   return usersRepository.getUser(id);
 }
 
+async function addCredits(id, amount) {
+  const user = await usersRepository.getUser(id);
+  const newCredit = user.credit + amount;
+  return usersRepository.updateUser(id, user.email, user.fullName, newCredit);
+}
+
 async function emailExists(email) {
   const user = await usersRepository.getUserByEmail(email);
   return !!user; // Return true if user exists, false otherwise
@@ -28,6 +34,7 @@ async function deleteUser(id) {
 module.exports = {
   getUsers,
   getUser,
+  addCredits,
   emailExists,
   createUser,
   updateUser,
