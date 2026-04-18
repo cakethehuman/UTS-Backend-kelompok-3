@@ -10,6 +10,12 @@ module.exports = (app) => {
 	// see all the tickets that have been made
 	route.get('/tickets', adminController.getTickets);
 
+  // Make a ticket
+  route.post('/tickets', usersController.createTickets);
+
+  // Delete a Ticket by id
+  route.delete('/tickets/:id', usersController.deleteTicket);
+  
 	// make teams
 	route.post('/teams', adminController.createTeams);
 

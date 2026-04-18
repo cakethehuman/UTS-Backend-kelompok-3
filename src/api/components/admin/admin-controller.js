@@ -94,7 +94,29 @@ async function createTickets(request, response, next) {
 	}
 }
 
+async function deleteTicket(request, response, next) {
+  try {
+    const {id} = request.params;
+
+    const ticket = await adminService.deleteTicket(id);
+
+    if (!ticket) {
+      return response.status(404).json({message: 'Ticket not found'});
+    }
+
+    return response.status(200).json({
+      message: 'Ticket has been deleted. Your refund is being processed.',
+      data: ticket,
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 module.exports = {
+  createGames,
+  createTickets,
+  deleteTicket,
 	createGames,
 	createTickets,
 	createSeat,

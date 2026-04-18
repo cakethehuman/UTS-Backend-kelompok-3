@@ -14,6 +14,10 @@ async function createTeams(name, abbreviation, venue, state, city) {
 	return Teams.create({name, abbreviation, venue, state, city});
 }
 
+async function deleteTicket(id) {
+  return Tickets.findByIdAndDelete(id);
+}
+
 async function createSeats(seatsInfo) {
 	return Seats.create(seatsInfo);
 }

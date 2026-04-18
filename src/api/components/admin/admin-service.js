@@ -21,7 +21,14 @@ async function createTickets(match, seatId, price, date, status) {
 	return adminRepository.createTickets(match, seatId, price, date, status);
 }
 
+async function deleteTicket(id) {
+  return adminRepository.deleteTicket(id);
+}
+
 module.exports = {
+  createGames,
+  createTickets,
+  deleteTicket,
 	createGame,
 	createTickets,
 	createSeats,
