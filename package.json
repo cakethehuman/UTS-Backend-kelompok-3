@@ -4,6 +4,7 @@
   "description": "1. Fork and clone this repository to your local computer.\r 2. Open the project using VS Code.\r 3. Install the recommended VS Code extensions: `ESLint` and `Prettier`.\r 4. Copy and rename `.env.example` to `.env`. Open `.env` and change the database connection string.\r 5. Run `npm install` to install the project dependencies.\r 6. Run `npm run dev` to start the dev server.\r 7. Test the endpoints in the API client app.",
   "main": "src/index.js",
   "scripts": {
+    "seed": "nodemon scripts/seedAdmin.js",
     "dev": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint src/**"
