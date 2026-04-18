@@ -1,36 +1,31 @@
 const {Users} = require('../../../models');
 
 async function getUsers() {
-  return Users.find({});
+	return Users.find({});
 }
 
 async function getUser(id) {
-  return Users.findById(id);
+	return Users.findById(id);
 }
 
 async function getUserByEmail(email) {
-  return Users.findOne({email});
+	return Users.findOne({email});
 }
 
 async function createUser(email, password, fullName, credit) {
-  return Users.create({email, password, fullName, credit});
+	return Users.create({email, password, fullName, credit});
 }
 
-
 async function updateUser(id, email, fullName) {
-  return Users.updateOne({_id: id}, {$set: {email, fullName}});
+	return Users.updateOne({_id: id}, {$set: {email, fullName}});
 }
 
 async function updateUserSession(id) {
-  return Users.updateOne({_id: id}, {lastSession: Date.now()});
-}
-
-async function changePassword(id, password) {
-  return Users.updateOne({_id: id}, {$set: {password}});
+	return Users.updateOne({_id: id}, {lastSession: Date.now()});
 }
 
 async function deleteUser(id) {
-  return Users.deleteOne({_id: id});
+	return Users.deleteOne({_id: id});
 }
 
 // bingung
@@ -50,12 +45,11 @@ async function deleteUser(id) {
 // }
 
 module.exports = {
-  getUsers,
-  getUser,
-  getUserByEmail,
-  createUser,
-  updateUser,
-  changePassword,
-  deleteUser,
-  updateUserSession,
+	getUsers,
+	getUser,
+	getUserByEmail,
+	createUser,
+	updateUser,
+	deleteUser,
+	updateUserSession,
 };
