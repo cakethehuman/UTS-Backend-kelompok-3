@@ -11,8 +11,8 @@ async function buyTicket(userId, seatId, gameId) {
 async function getOrdersById(id) {
 	return ordersRepository.getOrdersById(id);
 }
-async function getUserCreds(id) {
-	return ordersRepository.getUserCreds(id);
+async function getUser(id) {
+	return ordersRepository.getUser(id);
 }
 
 async function getseatPrice(id) {
@@ -30,6 +30,6 @@ module.exports = {
 	getOrdersById,
 	payment,
 	createTicket,
-	getUserCreds,
+	getUser,
 	getseatPrice
 };

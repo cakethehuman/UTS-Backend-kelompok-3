@@ -1,6 +1,9 @@
 const express = require('express');
 
 const adminController = require('./admin-controller');
+const verifyLogin = require('../../../utils/AuthenticateToken');
+
+const verifyAdmin = require('../../../middleware/admin')
 
 const route = express.Router();
 
@@ -8,7 +11,7 @@ module.exports = (app) => {
 	app.use('/admin', route);
 
 	// see all the tickets that have been made
-	route.get('/tickets', adminController.getTickets);
+	route.get('/tickets', verifyLogin, verifyAdmin, adminController.getTickets);
 
   // Make a ticket
   route.post('/tickets', usersController.createTickets);
@@ -17,18 +20,18 @@ module.exports = (app) => {
   route.delete('/tickets/:id', usersController.deleteTicket);
   
 	// make teams
-	route.post('/teams', adminController.createTeams);
+	route.post('/teams', verifyLogin, verifyAdmin, adminController.createTeams);
 
 	// update teams
 
 	// GAMES
 	// Make a game
-	route.post('/games', adminController.createGames);
+	route.post('/games', verifyLogin, verifyAdmin, adminController.createGames);
 
 	// update teams
 
 	// update seats
 
 	// update ticket
-	route.post('/tickets', adminController.createTickets);
+	route.post('/tickets', verifyLogin, verifyAdmin, adminController.createTickets);
 };

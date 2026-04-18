@@ -39,18 +39,34 @@ async function payment(request, response, next) {
 
 		const tiketInfo = await ticketService.getOrdersById(orderId);
 
-		const userCreds = await ticketService.getUserCreds(tiketInfo.userId);
-		const seatPrice = await ticketService.getseatPrice(tiketInfo.seatId);
+		const currentUser = await ticketService.getUser(tiketInfo.userId);
+		const currentSeat = await ticketService.getseatPrice(tiketInfo.seatId);
 
-		console.log(userCreds.credit);
+		try {
+			if (currentUser.credit >= currentSeat.price) {
+					currentUser.credit -= currentSeat.price;
+					currentSeat.isBooked = true;
+					await currentUser.save(); // save the state to the user db
+					await currentSeat.save(); // save the state to the seat db
 
-		const tiket = {
-			userInfo: tiketInfo.userId,
-			gameInfo: tiketInfo.gameId,
-			seatInfo: tiketInfo.seatId,
-		};
+					const tiket = {
+						userInfo: tiketInfo.userId,
+						gameInfo: tiketInfo.gameId,
+						seatInfo: tiketInfo.seatId,
+					};
+					
+			    const hasil = await ticketService.createTicket(tiket);
+			}
+			else {
+				throw errorResponder(
+					errorTypes.INSUFFICIENT_CREDIT,
+					'Insufficient credit! You can\'t purchase a ticket'
+				);
+			}
+		} catch (error) {
+			return next(error)
+		}
 
-		const hasil = await ticketService.createTicket(tiket);
 
 		return response.status(201).json({message: 'Ticket payment has been confirmed and given to user'});
 	} catch (error) {

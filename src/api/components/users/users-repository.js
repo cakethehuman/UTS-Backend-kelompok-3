@@ -16,6 +16,7 @@ async function createUser(email, password, fullName, credit) {
   return Users.create({email, password, fullName, credit});
 }
 
+
 async function updateUser(id, email, fullName) {
   return Users.updateOne({_id: id}, {$set: {email, fullName}});
 }

@@ -17,5 +17,8 @@ module.exports = (app) => {
   
   // endpoint to retrieve user's data
   route.get('/me', authenticateToken, authController.getMe);
+
+  // change password
+  route.put('/changePassword/:userId', authController.changePassword);
 }
 

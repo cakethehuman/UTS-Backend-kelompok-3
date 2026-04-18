@@ -8,11 +8,8 @@ async function login(email, password) {
 	if (!user) {
 		throw errorResponder(errorTypes.INVALID_CREDENTIALS, "Didn't found the user with specified email!");
 	}
-	// console.log(password);
-	// console.log(user.password);
-	// console.log(await hashPassword(password));
+
 	const match = await passwordMatched(password, user.password);
-	console.log(match);
 	if (!match) {
 		throw errorResponder(errorTypes.INVALID_PASSWORD, 'Incorrect password!');
 	}
@@ -42,10 +39,14 @@ async function register(email, password, fullName, credit) {
 	return usersRepository.createUser(email, hashedPassword, fullName, credit);
 }
 
+async function changePassword(userId, newPassword) {
+	return usersRepository.changePassword(userId, newPassword);
+}
 
 
 module.exports = {
 	login,
 	register,
-	emailExists
+	emailExists,
+	changePassword
 };
