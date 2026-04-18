@@ -12,6 +12,10 @@ async function getUserByEmail(email) {
 	return Users.findOne({email});
 }
 
+async function getUserByFullName(fullName) {
+	return Users.findOne({fullName});
+}
+
 async function createUser(email, password, fullName, credit) {
 	return Users.create({email, password, fullName, credit});
 }
@@ -52,4 +56,5 @@ module.exports = {
 	updateUser,
 	deleteUser,
 	updateUserSession,
+	getUserByFullName,
 };
