@@ -1,24 +1,14 @@
-const ticketsRepository = require('./teams-repository');
+const teamsRepository = require('./teams-repository');
 
-async function getTickets() {
-  return ticketsRepository.getTickets();
+async function getTeams() {
+  return teamsRepository.getTeams();
 }
 
-async function getTicketById(id) {
-  return ticketsRepository.getTicketById(id);
-}
-
-async function updateTicket(id, updateData) {
-  return ticketsRepository.updateTicket(id, updateData);
-}
-
-async function deleteTicket(id) {
-  return ticketsRepository.deleteTicket(id);
+async function getTeamsById(id) {
+  return teamsRepository.getTeamsById(id);
 }
 
 module.exports = {
-  getTickets,
-  getTicketById,
-  updateTicket,
-  deleteTicket,
+  getTeams,
+  getTeamsById
 };

@@ -1,24 +1,14 @@
-const {Tickets} = require('../../../models');
+const {Teams} = require('../../../models');
 
-async function getTickets() {
-  return Tickets.find({});
+async function getTeams() {
+  return Teams.find({});
 }
 
-async function getTicketById(id) {
-  return Tickets.findById(id);
-}
-
-async function updateTicket(id, updateData) {
-  return Tickets.findByIdAndUpdate(id, updateData, {new: true});
-}
-
-async function deleteTicket(id) {
-  return Tickets.findByIdAndDelete(id);
+async function getTeamsById(id) {
+  return Teams.findById(id);
 }
 
 module.exports = {
-  getTickets,
-  getTicketById,
-  updateTicket,
-  deleteTicket,
+  getTeams,
+  getTeamsById,
 };
