@@ -9,8 +9,8 @@ async function getUser(id) {
 }
 
 async function addCredits(id, amount) {
-  const user = await getUser(id);
-  return Users.updateOne({_id: id}, {$set: {credit: newCredit}});
+	const user = await getUser(id);
+	return Users.updateOne({_id: id}, {$set: {credit: newCredit}});
 }
 
 async function getUserByEmail(email) {
@@ -25,8 +25,16 @@ async function createUser(email, password, fullName, credit) {
 	return Users.create({email, password, fullName, credit});
 }
 
-async function updateUser(id, email, fullName) {
-	return Users.updateOne({_id: id}, {$set: {email, fullName}});
+async function changePassword(id, newPassword) {
+	return Users.updateOne({_id: id}, {$set: {password: newPassword}});
+}
+
+async function updateUserEmail(id, email) {
+	return Users.updateOne({_id: id}, {$set: {email: email}});
+}
+
+async function updateUsername(id, name) {
+	return Users.updateOne({_id: id}, {$set: {fullName: name}});
 }
 
 async function updateUserSession(id) {
@@ -59,8 +67,10 @@ module.exports = {
 	addCredits,
 	getUserByEmail,
 	createUser,
-	updateUser,
+	updateUserEmail,
+	updateUsername,
 	deleteUser,
 	updateUserSession,
 	getUserByFullName,
+	changePassword,
 };

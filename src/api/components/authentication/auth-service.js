@@ -50,15 +50,13 @@ async function register(email, password, fullName, credit) {
 async function changePassword(userId, newPassword) {
 	return usersRepository.changePassword(userId, newPassword);
 }
-
+//, user.fullName
 async function changeEmail(userId, newEmail) {
-	const user = await usersService.getUser(userId);
-	return usersRepository.updateUser(userId, newEmail, user.fullName);
+	return usersRepository.updateUserEmail(userId, newEmail);
 }
 
 async function changeFullName(userId, newName) {
-	const user = await usersService.getUser(userId);
-	return usersRepository.updateUser(userId, user.email, newName);
+	return usersRepository.updateUsername(userId, newName);
 }
 
 module.exports = {
