@@ -1,7 +1,10 @@
 const usersRepository = require('../users/users-repository');
+const usersService = require('../users/users-service');
 const {hashPassword, passwordMatched} = require('../../../utils/password');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 const {generateAccessToken} = require('../../../utils/jwt');
+const {Schema} = require('mongoose');
+const user = require('../../../models/users-schema');
 
 async function login(email, password) {
 	const user = await usersRepository.getUserByEmail(email);
@@ -23,12 +26,17 @@ async function login(email, password) {
 
 	const token = generateAccessToken(payload);
 
-	return (token);
+	return token;
 }
 
 async function emailExists(email) {
 	const user = await usersRepository.getUserByEmail(email);
 	return !!user; // Return true if user exists, false otherwise
+}
+
+async function fullNameExists(fullName) {
+	const user = await usersRepository.getUserByFullName(fullName);
+	return !!user;
 }
 
 async function register(email, password, fullName, credit) {
@@ -43,10 +51,22 @@ async function changePassword(userId, newPassword) {
 	return usersRepository.changePassword(userId, newPassword);
 }
 
+async function changeEmail(userId, newEmail) {
+	const user = await usersService.getUser(userId);
+	return usersRepository.updateUser(userId, newEmail, user.fullName);
+}
+
+async function changeFullName(userId, newName) {
+	const user = await usersService.getUser(userId);
+	return usersRepository.updateUser(userId, user.email, newName);
+}
 
 module.exports = {
 	login,
 	register,
 	emailExists,
-	changePassword
+	fullNameExists,
+	changePassword,
+	changeEmail,
+	changeFullName,
 };

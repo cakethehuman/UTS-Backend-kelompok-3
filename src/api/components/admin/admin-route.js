@@ -29,6 +29,7 @@ module.exports = (app) => {
 
 	// update ticket
 	route.post('/tickets', verifyLogin, verifyAdmin, adminController.createTickets);
+
 	// Delete a Ticket by id
 	route.delete('/tickets/:id', verifyLogin, verifyAdmin, adminController.deleteTicket);
 };

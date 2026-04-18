@@ -6,22 +6,24 @@ const authenticateToken = require('../../../utils/AuthenticateToken');
 const route = express.Router();
 
 module.exports = (app) => {
-  app.use('/users', route);
+	app.use('/users', route);
 
   route.post('/:id/balance', usersController.addCredits);
 
   // // Get list of users
   // route.get('/', usersController.getUsers);
+	// // Get list of users
+	// route.get('/', usersController.getUsers);
 
-  // // Create a new user
-  // route.post('/', usersController.createUser);
+	// // Create a new user
+	// route.post('/', usersController.createUser);
 
-  // Get user detail
-  route.get('/:id', usersController.getUser);
+	// Get user detail
+	route.get('/:id', usersController.getUser);
 
-  // Update user
-  route.put('/:id', usersController.updateUser);
+	// Update user
+	route.put('/:id', usersController.updateUser);
 
-  // Delete user
-  route.delete('/:id', usersController.deleteUser);
+	// Delete user
+	route.delete('/:id', usersController.deleteUser);
 };
