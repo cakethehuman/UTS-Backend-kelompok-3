@@ -6,4 +6,5 @@ desktop.ini
 .npm
 .eslintrc.js
 .prettierrc
+.vscode
 eslint.config.mjs
