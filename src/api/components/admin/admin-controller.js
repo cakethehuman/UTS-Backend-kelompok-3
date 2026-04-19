@@ -117,16 +117,9 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a away team');
 		}
 
-		if (homeTeam === awayTeam){
-			throw errorResponder(
-				errorTypes.VALIDATION,
-				'homeTeam cannot be same as awayTeam!'
-			);
+		if (homeTeam === awayTeam) {
+			throw errorResponder(errorTypes.VALIDATION, 'homeTeam cannot be same as awayTeam!');
 		}
-
-		// if (!date) {
-		// 	throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add date');
-		// }
 
 		const success = await adminService.createGame(homeTeamInfo, awayTeamInfo, date);
 
@@ -134,19 +127,24 @@ async function createGames(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to create a game');
 		}
 
+		// This is for generating seats
 		const seats = await generateSeats(success._id);
 
 		if (!seats) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to generate seats for the game');
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to generate seats for the game');
 		}
 
-		await adminService.createSeats(seats);
-		return response.status(201).json(
-			{
-				message: 'Games created successfully',
-				gameId: success._id
-			}
-		);
+		// this is for creating them
+		const seatsMade = await adminService.createSeats(seats);
+
+		if (!seatsMade) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to insert seats to game');
+		}
+
+		return response.status(201).json({
+			message: 'Games created successfully',
+			gameId: success._id,
+		});
 	} catch (error) {
 		return next(error);
 	}
@@ -170,9 +168,26 @@ async function createGamesBulk(request, response, next) {
 			let gameDate = new Date();
 			gameDate.setDate(today.getDate() + addDates);
 			const makeGames = await adminService.createGame(teams[random], teams[random2], gameDate.toISOString().split('T')[0]);
-		}
 
-		return response.status(201).json({message: 'made random teams'});
+			if (!makeGames) {
+				throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to make games');
+			}
+
+			const seats = await generateSeats(makeGames._id);
+
+			if (!seats) {
+				throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to make seats');
+			}
+
+			const seatsMade = await adminService.createSeats(seats);
+
+			if (!seatsMade) {
+				throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to insert seats to game');
+			}
+		}
+		return response.status(201).json({
+			message: `Made ${jumlah} random games`,
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -198,7 +213,7 @@ async function createTickets(request, response, next) {
 		const userInfo = await adminService.getUserById(userId);
 		const gameInfo = await adminService.getGamesById(gameId);
 		const seatInfo = await adminService.getSeatsById(seatId);
-		const orderInfo = await adminService.get
+		const orderInfo = await adminService.get;
 
 		const tickets = await adminService.createTickets(userInfo, gameInfo, seatInfo);
 
@@ -315,13 +330,11 @@ async function getOrders(request, response, next) {
 
 		const orderList = await adminService.getOrders(filters);
 
-		return response.status(200).json(
-			{
-				message: "Successfully retrieving the data",
-				data: orderList
-			}
-		);
-	}	catch (error) {
+		return response.status(200).json({
+			message: 'Successfully retrieving the data',
+			data: orderList,
+		});
+	} catch (error) {
 		next(error);
 	}
 }
@@ -329,34 +342,22 @@ async function getOrders(request, response, next) {
 async function cancellationApproval(request, response, next) {
 	try {
 		const orderId = request.params.orderId;
-		const { action, reason } = request.body;
+		const {action, reason} = request.body;
 		if (!orderId) {
-			throw errorResponder(
-				errorTypes.VALIDATION,
-				"Order not found"
-			);
+			throw errorResponder(errorTypes.VALIDATION, 'Order not found');
 		}
 		if (!action) {
-			throw errorResponder(
-				errorTypes.VALIDATION,
-				"Please provide an action"
-			);
+			throw errorResponder(errorTypes.VALIDATION, 'Please provide an action');
 		}
 		const success = await adminService.cancellationApproval(orderId, action, reason);
-		
 
 		if (!success) {
-			throw errorResponder(
-				errorResponder.VALIDATION,
-				"Something went wrong"
-			);
+			throw errorResponder(errorResponder.VALIDATION, 'Something went wrong');
 		}
-		return response.status(200).json(
-			{
-				message: "The status has successfully changed!",
-				data: success
-			}
-		)
+		return response.status(200).json({
+			message: 'The status has successfully changed!',
+			data: success,
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -379,9 +380,9 @@ module.exports = {
 	createTeams,
 	getTickets,
 	getOrders,
-	cancellationApproval
 	updateTeam,
 	deleteTeam,
 	// orders
 	getOrders,
+	cancellationApproval,
 };

@@ -16,7 +16,7 @@ module.exports = (app) => {
 	route.get('/tickets', verifyLogin, verifyAdmin, adminController.getTickets);
 
 	// get orders
-	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders)
+	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders);
 
 	// make teams
 	route.post('/teams', verifyLogin, verifyAdmin, adminController.createTeams);
@@ -59,5 +59,5 @@ module.exports = (app) => {
 
 	// changing order data, can be used to confirming cancellation for user order
 	// refund if seat is booked, if not don't refund
-	route.patch("/orders/cancellationApproval/:orderId", verifyLogin, verifyAdmin, adminController.cancellationApproval);
+	route.patch('/orders/cancellationApproval/:orderId', verifyLogin, verifyAdmin, adminController.cancellationApproval);
 };

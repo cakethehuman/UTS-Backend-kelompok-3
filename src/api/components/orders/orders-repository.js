@@ -1,15 +1,40 @@
 const {Orders} = require('../../../models');
 const {Tickets} = require('../../../models');
-const { Seats } = require('../../../models');
-const { Users } = require('../../../models');
-const { Games } = require("../../../models")
-const { Teams } = require("../../../models")
-async function orderPlacement(userId, seatId, gameId) {
-	return Orders.create({userId, seatId, gameId});
+const {Seats} = require('../../../models');
+const {Users} = require('../../../models');
+const {Games} = require('../../../models');
+const {Teams} = require('../../../models');
+
+async function orderPlacement(userInfo, seatInfo, gameInfo) {
+	return Orders.create({
+		userId: userInfo._id,
+		gameId: gameInfo._id,
+		seatId: seatInfo._id,
+		userInfo: {
+			email: userInfo.email,
+			fullName: userInfo.fullName,
+		},
+		gameInfo: {
+			homeTeam: gameInfo.homeTeam.name,
+			awayTeam: gameInfo.awayTeam.name,
+		},
+		seatInfo: {
+			seatNumber: seatInfo.seatNumber,
+			price: seatInfo.price,
+		},
+	});
 }
 
 async function getUser(id) {
 	return Users.findById(id);
+}
+
+async function getGame(id) {
+	return Games.findById(id);
+}
+
+async function getSeat(id) {
+	return Seats.findById(id);
 }
 
 async function getseatPrice(id) {
@@ -42,8 +67,8 @@ async function cancel(orderId) {
 			_id: orderId,
 		},
 		{
-			$set: {status: "requesting cancel"},
-			$ne: {status: "requesting cancel"}
+			$set: {status: 'requesting cancel'},
+			$ne: {status: 'requesting cancel'},
 		}
 	);
 }
@@ -53,10 +78,9 @@ async function getOrderByEveryId(userId, seatId, gameId) {
 		userId: userId,
 		seatId: seatId,
 		gameId: gameId,
-		status: {$ne: "cancelled"}
-	})
+		status: {$ne: 'cancelled'},
+	});
 }
-
 
 module.exports = {
 	orderPlacement,
@@ -66,7 +90,9 @@ module.exports = {
 	getGameById,
 	getseatPrice,
 	getUser,
+	getGame,
+	getSeat,
 	getTeamById,
 	cancel,
-	getOrderByEveryId
+	getOrderByEveryId,
 };
