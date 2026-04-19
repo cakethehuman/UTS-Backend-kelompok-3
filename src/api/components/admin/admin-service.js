@@ -59,7 +59,21 @@ async function getOrders(filters) {
 
 async function cancellationApproval(orderId, action, reason) {
 	const order = await adminRepository.getOrderById(orderId);
+	const seat = await adminRepository.getSeatsById(order.seatId);
 
+	if (!order) {
+		throw errorResponder(
+			errorTypes.VALIDATION,
+			"Order not found!"
+		);
+	}
+
+	if (!seat) {
+		throw errorResponder(
+			errorTypes.VALIDATION,
+			"Seat not found!"
+		)
+	}
 
 	if (order.status !== "requesting cancel") {
 		throw errorResponder(
@@ -69,9 +83,14 @@ async function cancellationApproval(orderId, action, reason) {
 	}
 
 	if (action === "approve") {
-		await refund(orderId);
-
-		return adminRepository.getOrderById(orderId);
+		if (seat.isBooked){
+			await refund(orderId);
+			return adminRepository.getOrderById(orderId);
+		}
+		else {
+			await adminRepository.updateOrderStatus(orderId, "cancelled");
+			return adminRepository.getOrderById(orderId);
+		}
 	}
 	else {
 		await adminRepository.updateOrderStatus(orderId, "paid");

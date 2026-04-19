@@ -38,5 +38,6 @@ module.exports = (app) => {
 	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders);
 
 	// changing order data, can be used to confirming cancellation for user order
+	// refund if seat is booked, if not don't refund
 	route.patch("/orders/cancellationApproval/:orderId", verifyLogin, verifyAdmin, adminController.cancellationApproval);
 };
