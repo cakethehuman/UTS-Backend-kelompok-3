@@ -26,7 +26,7 @@ module.exports = (db) =>
 			},
 			status: {
 				type: String,
-				enum: ['scheduled', 'live', 'finished', 'cancelled'],
+				enum: ['scheduled', 'finished', 'cancelled'],
 				default: 'scheduled',
 				required: true,
 			},

@@ -5,9 +5,18 @@ const {Teams} = require('../../../models');
 const {Users} = require('../../../models');
 const {Orders} = require('../../../models');
 const { cancellationApproval } = require('./admin-service');
+
 // get functions
 async function getTickets() {
 	return Tickets.find({});
+}
+
+async function getOrders() {
+	return Orders.find({});
+}
+
+async function getTeams(id) {
+	return Teams.find({});
 }
 
 async function getTeamsById(id) {
@@ -39,6 +48,7 @@ async function getTicketByOrderId(orderId) {
 }
 
 
+// create functions
 async function createTeams(name, abbreviation, venue, state, city) {
 	return Teams.create({name, abbreviation, venue, state, city});
 }
@@ -148,14 +158,39 @@ async function updateOrderStatus(orderId, status) {
 }
 
 
+async function updateGame(id, info) {
+	return Games.updateOne({_id: id}, {$set: info});
+}
+
+async function updateTeam(id, info) {
+	return Teams.updateOne({_id: id}, {$set: info});
+}
+
+// delete functions
+
+async function deleteGame(id) {
+	return Games.findByIdAndDelete(id);
+}
+
+async function deleteTeam(id) {
+	return Teams.findByIdAndDelete(id);
+}
+
+async function deleteTicket(id) {
+	return Tickets.findByIdAndDelete(id);
+}
 
 module.exports = {
 	createGame,
+	deleteGame,
 	createTickets,
 	createSeats,
 	createTeams,
 	getTickets,
+	getTeams,
 	getTeamsById,
+	updateTeam,
+	deleteTeam,
 	getGamesById,
 	getSeatsById,
 	getUsersById,
@@ -169,4 +204,6 @@ module.exports = {
 	updateOrderStatus,
 	getOrderById,
 	deleteOrder
+	updateGame,
+	getOrders,
 };
