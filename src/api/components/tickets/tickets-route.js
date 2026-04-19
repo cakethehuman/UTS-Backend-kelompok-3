@@ -14,15 +14,6 @@ module.exports = (app) => {
   // Get ticket in hand
   route.get('/me', authenticateToken, ticketsController.getMyTicket);
   
-  // Get a Ticket by id
-  route.get('/:id', verifyLogin, ticketsController.getTicketById);
-
-  // Ticket by id
-  route.put('/:id', ticketsController.updateTicket);
-
-  // Delete a Ticket by id
-  route.delete('/:id', ticketsController.deleteTicket);
-
   // patch ticket by id
   route.patch('/:id/cancel', ticketsController.cancelTicket);
 };

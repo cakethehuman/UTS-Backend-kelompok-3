@@ -15,9 +15,6 @@ module.exports = (app) => {
 	// see all the tickets that have been made
 	route.get('/tickets', verifyLogin, verifyAdmin, adminController.getTickets);
 
-	// get orders
-	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders);
-
 	// make teams
 	route.post('/teams', verifyLogin, verifyAdmin, adminController.createTeams);
 
@@ -54,7 +51,6 @@ module.exports = (app) => {
 	route.delete('/tickets/:id', verifyLogin, verifyAdmin, adminController.deleteTicket);
 
 	// Checking order list
-
 	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders);
 
 	// changing order data, can be used to confirming cancellation for user order

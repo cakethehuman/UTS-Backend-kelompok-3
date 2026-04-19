@@ -1,4 +1,4 @@
-# Backend Programming Template (2025)
+# UTS KELOMPOK 3 backend
 
 ## Development Setup
 
@@ -12,10 +12,10 @@
 
 ## Add New API Endpoints
 
-1. Create a new database schema in `./src/models`.
-2. Create a new folder in `./src/api/components` (if needed). Remember to separate your codes to repositories, services, controllers, and routes.
-3. Add the new route in `./src/api/routes.js`.
-4. Test your new endpoints in the API client app.
+
+
+
+
 
 ## Creating user & login to it
 POST `/NBA/auth/register`.

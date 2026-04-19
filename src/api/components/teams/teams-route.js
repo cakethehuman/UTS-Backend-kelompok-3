@@ -10,5 +10,4 @@ module.exports = (app) => {
 	// Get teams lists
 	route.get('/', verifyLogin, teamsController.getTeams);
 	route.get('/:id', verifyLogin, teamsController.getTeamsById);
-
 };
