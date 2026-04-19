@@ -20,8 +20,8 @@ module.exports = (db) =>
 			},
 			status: {
 				type: String,
-				enum: ['pending', 'paid', 'cancelled', 'expired'],
-				default: 'pending',
+				enum: ['pending', 'paid', 'cancelled', 'expired', "requesting cancel"],
+				default: 'pending'
 			},
 		})
 	);

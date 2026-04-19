@@ -3,7 +3,8 @@ const {Games} = require('../../../models');
 const {Tickets} = require('../../../models');
 const {Teams} = require('../../../models');
 const {Users} = require('../../../models');
-
+const {Orders} = require('../../../models');
+const { cancellationApproval } = require('./admin-service');
 // get functions
 async function getTickets() {
 	return Tickets.find({});
@@ -25,6 +26,19 @@ async function getUsersById(id) {
 	return Users.findById(id);
 }
 
+async function getOrderById(id) {
+	return Orders.findById(id);
+}
+
+async function getTicketByOrderId(orderId) {
+	return Tickets.findOne(
+		{
+			"orderInfo.orderId": orderId
+		}
+	);
+}
+
+
 async function createTeams(name, abbreviation, venue, state, city) {
 	return Teams.create({name, abbreviation, venue, state, city});
 }
@@ -32,6 +46,11 @@ async function createTeams(name, abbreviation, venue, state, city) {
 async function deleteTicket(id) {
 	return Tickets.findByIdAndDelete(id);
 }
+
+async function deleteOrder(id) {
+	return Orders.findByIdAndDelete(id);
+}
+
 
 async function createSeats(seatsInfo) {
 	return Seats.create(seatsInfo);
@@ -57,7 +76,7 @@ async function createGame(homeTeamInfo, awayTeamInfo, date) {
 	});
 }
 
-async function createTickets(userInfo, gameInfo, seatInfo) {
+async function createTickets(userInfo, gameInfo, seatInfo, orderInfo) {
 	return Tickets.create({
 		userInfo: {
 			userId: userInfo._id,
@@ -74,8 +93,61 @@ async function createTickets(userInfo, gameInfo, seatInfo) {
 			seatNumber: seatInfo.seatNumber,
 			isBooked: seatInfo.isBooked,
 		},
+		orderInfo: {
+			orderId: orderInfo._id
+		}
 	});
 }
+
+async function getOrders(filter) {
+	return Orders.find(filter);
+}
+
+async function cancelOrder(orderId) {
+	return Orders.findOneAndUpdate(
+		{
+			_id: orderId
+		}, 
+		{
+			$set: {status: "cancelled"}
+		}
+	)
+}
+
+async function addUserCredit(userId, amount) {
+	return Users.findOneAndUpdate(
+		{
+			_id: userId
+		},
+		{
+			$inc: {credit: amount}
+		}
+	)
+}
+
+async function updateSeatStatus(seatId, status) {
+	return Seats.findOneAndUpdate(
+		{
+			_id: seatId
+		},
+		{
+			$set: {isBooked: status}
+		}
+	)
+}
+
+async function updateOrderStatus(orderId, status) {
+	return Orders.findOneAndUpdate(
+		{
+			_id: orderId
+		},
+		{
+			$set: {status: status}
+		}
+	)
+}
+
+
 
 module.exports = {
 	createGame,
@@ -88,4 +160,13 @@ module.exports = {
 	getSeatsById,
 	getUsersById,
 	deleteTicket,
+	getOrders,
+	getTicketByOrderId,
+	deleteTicket,
+	addUserCredit,
+	cancelOrder,
+	updateSeatStatus,
+	updateOrderStatus,
+	getOrderById,
+	deleteOrder
 };

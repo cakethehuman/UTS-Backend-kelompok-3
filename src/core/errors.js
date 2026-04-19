@@ -185,6 +185,16 @@ const errorTypes = {
 		status: 403,
 		code: 'NAME_INVALID_ERROR',
 	},
+	DATE_INVALID: {
+		description: "Please enter a valid date!",
+		status: 403,
+		code: 'DATE_INVALID_ERROR'
+	},
+	SEAT_BOOKED: {
+		description: "Seat is booked, please find another seat!",
+		status: 403,
+		code: "SEAT_BOOK_ERROR"
+	},
 };
 
 const errorResponder = (errorType, message = '') => {

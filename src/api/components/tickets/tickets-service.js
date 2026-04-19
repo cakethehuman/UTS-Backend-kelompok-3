@@ -24,6 +24,11 @@ async function cancelTicket(ticketId, cancelData) {
   return ticketsRepository.cancelTicket(ticketId, cancelData);
 }
 
+async function getTicketByOrderId(orderId) {
+  return ticketsRepository.getTicketByOrderId(orderId);
+}
+
+
 module.exports = {
 	getTickets,
 	getTicketById,
@@ -35,4 +40,5 @@ module.exports = {
   deleteTicket,
   cancelTicket,
   findTicketsbyId,
+  getTicketByOrderId
 };
