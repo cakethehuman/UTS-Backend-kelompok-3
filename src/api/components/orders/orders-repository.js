@@ -49,6 +49,10 @@ async function getOrdersById(orderId) {
 	return Orders.findById(orderId);
 }
 
+async function getOrdersByUserId(userId) {
+	return Orders.find({userId: userId});
+}
+
 async function createTicket(ticket) {
 	return Tickets.create(ticket);
 }
@@ -87,6 +91,7 @@ module.exports = {
 	changeOrderStatus,
 	createTicket,
 	getOrdersById,
+	getOrdersByUserId,
 	getGameById,
 	getseatPrice,
 	getUser,

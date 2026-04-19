@@ -24,6 +24,10 @@ async function getOrdersById(id) {
 	return ordersRepository.getOrdersById(id);
 }
 
+async function getOrdersByUserId(userId) {
+	return ordersRepository.getOrdersByUserId(userId);
+}
+
 async function getUser(id) {
 	return ordersRepository.getUser(id);
 }
@@ -92,6 +96,7 @@ async function payment(user, seat, order) {
 module.exports = {
 	orderPlacement,
 	getOrdersById,
+	getOrdersByUserId,
 	payment,
 	createTicket,
 	getUser,
