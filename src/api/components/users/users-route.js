@@ -8,10 +8,10 @@ const route = express.Router();
 module.exports = (app) => {
 	app.use('/users', route);
 
-  route.post('/:id/balance', usersController.addCredits);
+	route.post('/:id/balance', usersController.addCredits);
 
-  // // Get list of users
-  // route.get('/', usersController.getUsers);
+	// // Get list of users
+	// route.get('/', usersController.getUsers);
 	// // Get list of users
 	// route.get('/', usersController.getUsers);
 
@@ -19,7 +19,7 @@ module.exports = (app) => {
 	// route.post('/', usersController.createUser);
 
 	// Get user detail
-	route.get('/:id', usersController.getUser);
+	route.post('/me', usersController.getUser);
 
 	// Update user
 	route.put('/:id', usersController.updateUser);
