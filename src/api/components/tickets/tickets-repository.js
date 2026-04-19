@@ -20,8 +20,17 @@ async function findTicketsbyId(id) {
 	return Tickets.find(id);
 }
 
+// need action
 async function cancelTicket(id) {
 	return Tickets.findByIdAndUpdate(id, {status: 'cancelled'}, {new: true});
+}
+
+async function getTicketByOrderId(orderId) {
+	return Tickets.findOne(
+		{
+			"orderInfo.orderId": orderId
+		}
+	);
 }
 
 module.exports = {
@@ -35,4 +44,5 @@ module.exports = {
 	deleteTicket,
 	cancelTicket,
 	findTicketsbyId,
+	getTicketByOrderId
 };

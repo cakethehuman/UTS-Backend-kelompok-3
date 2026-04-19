@@ -1,3 +1,5 @@
+const randomDateGenerator = require("../utils/randomDate");
+
 module.exports = (db) =>
 	db.model(
 		'Games',
@@ -18,7 +20,8 @@ module.exports = (db) =>
 				state: {type: String, required: true},
 			},
 			date: {
-				type: String,
+				type: Date,
+				default: randomDateGenerator,
 				required: true,
 			},
 			status: {

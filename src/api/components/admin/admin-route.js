@@ -52,4 +52,12 @@ module.exports = (app) => {
 
 	// Delete a Ticket by id
 	route.delete('/tickets/:id', verifyLogin, verifyAdmin, adminController.deleteTicket);
+
+	// Checking order list
+
+	route.get('/orders', verifyLogin, verifyAdmin, adminController.getOrders);
+
+	// changing order data, can be used to confirming cancellation for user order
+	// refund if seat is booked, if not don't refund
+	route.patch("/orders/cancellationApproval/:orderId", verifyLogin, verifyAdmin, adminController.cancellationApproval);
 };

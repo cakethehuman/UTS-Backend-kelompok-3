@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
-const {response, request} = require('express');
-const ticketService = require('./orders-service');
+const orderService = require('./orders-service');
+const ticketService = require('../tickets/tickets-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 
-async function buyTicket(request, response, next) {
+async function orderPlacement(request, response, next) {
 	try {
-		const {userId, seatId, gameId} = request.body;
-
+		const {seatId, gameId} = request.body;
+		const userId = request.user.id;
 		if (!userId) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a user id');
 		}
@@ -19,13 +19,18 @@ async function buyTicket(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a game id');
 		}
 
-		const tiket = await ticketService.buyTicket(userId, seatId, gameId);
+		const order = await orderService.orderPlacement(userId, seatId, gameId);
 
-		if (!tiket) {
+		if (!order) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to make ticket');
 		}
 
-		return response.status(201).json({message: 'Order has been placed'});
+		return response.status(201).json(
+			{
+				message: 'Order has been placed',
+				orderId: order._id
+			}
+		);
 	} catch (error) {
 		return next(error);
 	}
@@ -33,34 +38,34 @@ async function buyTicket(request, response, next) {
 
 async function payment(request, response, next) {
 	try {
-		const {orderId} = request.body;
-
-		const order = await ticketService.payment(orderId);
-
-		const tiketInfo = await ticketService.getOrdersById(orderId);
-
-		const currentUser = await ticketService.getUser(tiketInfo.userId);
-		const currentSeat = await ticketService.getseatPrice(tiketInfo.seatId);
-
+		let hasil;
+		const tiketInfo = request.order;
+		
+		const currentUser = await orderService.getUser(tiketInfo.userId);
+		const currentSeat = await orderService.getseatPrice(tiketInfo.seatId);
 		try {
-			if (currentUser.credit >= currentSeat.price) {
-					currentUser.credit -= currentSeat.price;
-					currentSeat.isBooked = true;
-					await currentUser.save(); // save the state to the user db
-					await currentSeat.save(); // save the state to the seat db
-
-					const tiket = {
-						userInfo: tiketInfo.userId,
-						gameInfo: tiketInfo.gameId,
-						seatInfo: tiketInfo.seatId,
-					};
-					
-			    const hasil = await ticketService.createTicket(tiket);
+			
+			if (!tiketInfo || !currentUser || !currentSeat){
+				throw errorResponder(
+					errorTypes.VALIDATION,
+					'Something went wrong'
+				);
 			}
-			else {
+
+			if (currentUser.credit >= currentSeat.price && !currentSeat.isBooked) {
+				const order = await orderService.payment(currentUser, currentSeat, tiketInfo);
+				hasil = await orderService.createTicket(order);
+			}
+			else if (!(currentUser.credit >= currentSeat.price)){
 				throw errorResponder(
 					errorTypes.INSUFFICIENT_CREDIT,
 					'Insufficient credit! You can\'t purchase a ticket'
+				);
+			}
+			else if (currentSeat.isBooked) {
+				throw errorResponder(
+					errorTypes.SEAT_BOOKED,
+					"Seat is booked, please find another seat"
 				);
 			}
 		} catch (error) {
@@ -68,13 +73,44 @@ async function payment(request, response, next) {
 		}
 
 
-		return response.status(201).json({message: 'Ticket payment has been confirmed and given to user'});
+		return response.status(201).json(
+			{
+				message: 'Ticket payment has been confirmed and given to user',
+				ticket: hasil
+			}
+		);
 	} catch (error) {
 		return next(error);
 	}
 }
 
+async function cancel(request, response, next) {
+	try {
+		const orderId = request.order._id; // take from request from checkOwnership
+		const userId = request.user.id; // take from verifyLogin
+		if (!orderId || !userId) {
+			throw errorResponder(
+				errorTypes.VALIDATION,
+				'Something went wrong!'
+			);
+		}
+		// validation
+		const success = await orderService.cancel(orderId)
+		if (!success) {
+			throw errorResponder(
+				errorTypes.VALIDATION,
+				'Cannot make cancel request!'
+			);
+		}
+		return response.status(201).json({message: 'Ticket cancel request has been processed!'});
+
+	}	catch (error) {
+		return next(error);
+	}
+}
+
 module.exports = {
-	buyTicket,
+	orderPlacement,
 	payment,
+	cancel
 };
