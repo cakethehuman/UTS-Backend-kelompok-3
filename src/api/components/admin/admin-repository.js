@@ -4,7 +4,7 @@ const {Tickets} = require('../../../models');
 const {Teams} = require('../../../models');
 const {Users} = require('../../../models');
 const {Orders} = require('../../../models');
-const { cancellationApproval } = require('./admin-service');
+const {cancellationApproval} = require('./admin-service');
 
 // get functions
 async function getTickets() {
@@ -40,13 +40,10 @@ async function getOrderById(id) {
 }
 
 async function getTicketByOrderId(orderId) {
-	return Tickets.findOne(
-		{
-			"orderInfo.orderId": orderId
-		}
-	);
+	return Tickets.findOne({
+		'orderInfo.orderId': orderId,
+	});
 }
-
 
 // create functions
 async function createTeams(name, abbreviation, venue, state, city) {
@@ -60,7 +57,6 @@ async function deleteTicket(id) {
 async function deleteOrder(id) {
 	return Orders.findByIdAndDelete(id);
 }
-
 
 async function createSeats(seatsInfo) {
 	return Seats.create(seatsInfo);
@@ -104,8 +100,8 @@ async function createTickets(userInfo, gameInfo, seatInfo, orderInfo) {
 			isBooked: seatInfo.isBooked,
 		},
 		orderInfo: {
-			orderId: orderInfo._id
-		}
+			orderId: orderInfo._id,
+		},
 	});
 }
 
@@ -116,47 +112,46 @@ async function getOrders(filter) {
 async function cancelOrder(orderId) {
 	return Orders.findOneAndUpdate(
 		{
-			_id: orderId
-		}, 
+			_id: orderId,
+		},
 		{
-			$set: {status: "cancelled"}
+			$set: {status: 'cancelled'},
 		}
-	)
+	);
 }
 
 async function addUserCredit(userId, amount) {
 	return Users.findOneAndUpdate(
 		{
-			_id: userId
+			_id: userId,
 		},
 		{
-			$inc: {credit: amount}
+			$inc: {credit: amount},
 		}
-	)
+	);
 }
 
 async function updateSeatStatus(seatId, status) {
 	return Seats.findOneAndUpdate(
 		{
-			_id: seatId
+			_id: seatId,
 		},
 		{
-			$set: {isBooked: status}
+			$set: {isBooked: status},
 		}
-	)
+	);
 }
 
 async function updateOrderStatus(orderId, status) {
 	return Orders.findOneAndUpdate(
 		{
-			_id: orderId
+			_id: orderId,
 		},
 		{
-			$set: {status: status}
+			$set: {status: status},
 		}
-	)
+	);
 }
-
 
 async function updateGame(id, info) {
 	return Games.updateOne({_id: id}, {$set: info});
@@ -181,29 +176,39 @@ async function deleteTicket(id) {
 }
 
 module.exports = {
+	// Games
+
 	createGame,
+	updateGame,
+	getGamesById,
 	deleteGame,
-	createTickets,
-	createSeats,
-	createTeams,
+
+	// Tickets
 	getTickets,
+	getTicketByOrderId,
+	createTickets,
+	deleteTicket,
+
+	// seats
+	getSeatsById,
+	updateSeatStatus,
+	createSeats,
+
+	// Teams
 	getTeams,
+	createTeams,
 	getTeamsById,
 	updateTeam,
 	deleteTeam,
-	getGamesById,
-	getSeatsById,
+
+	// User
 	getUsersById,
-	deleteTicket,
-	getOrders,
-	getTicketByOrderId,
-	deleteTicket,
 	addUserCredit,
-	cancelOrder,
-	updateSeatStatus,
+
+	// orders
+	getOrders,
 	updateOrderStatus,
 	getOrderById,
-	deleteOrder
-	updateGame,
-	getOrders,
+	deleteOrder,
+	cancelOrder,
 };

@@ -1,7 +1,6 @@
 // admin service akan mengambil repository dari user
-const { errorResponder, errorTypes } = require('../../../core/errors');
+const {errorResponder, errorTypes} = require('../../../core/errors');
 const adminRepository = require('./admin-repository');
-
 
 // get functions
 async function getTickets() {
@@ -56,15 +55,15 @@ async function deleteTicket(id) {
 	return adminRepository.deleteTicket(id);
 }
 
-
 async function getOrders(filters) {
-	const allowedFilters = ['status', "orderId"]; // untuk sekarang status dulu
+	const allowedFilters = ['status', 'orderId']; // untuk sekarang status dulu
 	const query = {}; // ini yang akan di pass ke adminRepo
 	// Object.keys mereturn key yang ada json object
 	Object.keys(filters).forEach((key) => {
-		if (allowedFilters.includes(key) && filters[key]){// filters[key] mengecek truthy / falsy nya
+		if (allowedFilters.includes(key) && filters[key]) {
+			// filters[key] mengecek truthy / falsy nya
 			query[key] = filters[key];
-		} 
+		}
 	});
 	return adminRepository.getOrders(query);
 }
@@ -74,38 +73,27 @@ async function cancellationApproval(orderId, action, reason) {
 	const seat = await adminRepository.getSeatsById(order.seatId);
 
 	if (!order) {
-		throw errorResponder(
-			errorTypes.VALIDATION,
-			"Order not found!"
-		);
+		throw errorResponder(errorTypes.VALIDATION, 'Order not found!');
 	}
 
 	if (!seat) {
-		throw errorResponder(
-			errorTypes.VALIDATION,
-			"Seat not found!"
-		)
+		throw errorResponder(errorTypes.VALIDATION, 'Seat not found!');
 	}
 
-	if (order.status !== "requesting cancel") {
-		throw errorResponder(
-			errorTypes.VALIDATION,
-			"Invalid request"
-		);
+	if (order.status !== 'requesting cancel') {
+		throw errorResponder(errorTypes.VALIDATION, 'Invalid request');
 	}
 
-	if (action === "approve") {
-		if (seat.isBooked){
+	if (action === 'approve') {
+		if (seat.isBooked) {
 			await refund(orderId);
 			return adminRepository.getOrderById(orderId);
-		}
-		else {
-			await adminRepository.updateOrderStatus(orderId, "cancelled");
+		} else {
+			await adminRepository.updateOrderStatus(orderId, 'cancelled');
 			return adminRepository.getOrderById(orderId);
 		}
-	}
-	else {
-		await adminRepository.updateOrderStatus(orderId, "paid");
+	} else {
+		await adminRepository.updateOrderStatus(orderId, 'paid');
 		return adminRepository.getOrderById(orderId);
 	}
 }
@@ -113,34 +101,18 @@ async function cancellationApproval(orderId, action, reason) {
 async function refund(orderId) {
 	const ticket = await adminRepository.getTicketByOrderId(orderId);
 	if (!ticket) {
-		throw errorResponder(
-			errorTypes.VALIDATION,
-			'Ticket not found'
-		);
+		throw errorResponder(errorTypes.VALIDATION, 'Ticket not found');
 	}
 	const userId = ticket.userInfo.userId;
 	const seatId = ticket.seatInfo.seatId;
-	const [seat, user] = await Promise.all([
-		adminRepository.getSeatsById(seatId),
-		adminRepository.getUsersById(userId)
-	]);
+	const [seat, user] = await Promise.all([adminRepository.getSeatsById(seatId), adminRepository.getUsersById(userId)]);
 
 	if (!user || !seat) {
-		throw errorResponder(
-			errorTypes.VALIDATION,
-			"Cannot found user or seat"
-		);
+		throw errorResponder(errorTypes.VALIDATION, 'Cannot found user or seat');
 	}
 
-	
-
-	await Promise.all([
-		adminRepository.addUserCredit(userId, seat.price),
-		adminRepository.cancelOrder(orderId), 
-		adminRepository.updateSeatStatus(seatId, false),
-		adminRepository.deleteTicket(ticket._id)
-	]);
-	return "Success";
+	await Promise.all([adminRepository.addUserCredit(userId, seat.price), adminRepository.cancelOrder(orderId), adminRepository.updateSeatStatus(seatId, false), adminRepository.deleteTicket(ticket._id)]);
+	return 'Success';
 }
 
 async function getTicketByOrderId(orderId) {
@@ -172,27 +144,34 @@ async function deleteTicket(id) {
 }
 
 module.exports = {
+	// Games
+	getGamesById,
+	createGame,
+	updateGame,
+	deleteGame,
+
+	// Teams
 	getTeams,
 	getTeamsById,
-	deleteTeam,
-	getUserById,
-	getSeatsById,
-	getGamesById,
-	getOrderById,
-	deleteGame,
-	createTickets,
-	deleteTicket,
-	createGame,
-	createTickets,
-	createSeats,
 	createTeams,
 	updateTeam,
-	getTeams,
-	updateGame,
+	deleteTeam,
+
+	// Tickets
 	getTickets,
-	getOrders,
-	cancellationApproval,
 	getTicketByOrderId,
+	createTickets,
 	deleteTicket,
-	
+
+	// Users
+	getUserById,
+
+	// seats
+	getSeatsById,
+	createSeats,
+
+	// Orders
+	getOrders,
+	getOrderById,
+	cancellationApproval,
 };
