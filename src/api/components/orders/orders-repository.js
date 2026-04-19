@@ -48,6 +48,15 @@ async function cancel(orderId) {
 	);
 }
 
+async function getOrderByEveryId(userId, seatId, gameId) {
+	return Orders.findOne({
+		userId: userId,
+		seatId: seatId,
+		gameId: gameId,
+		status: {$ne: "cancelled"}
+	})
+}
+
 
 module.exports = {
 	orderPlacement,
@@ -58,5 +67,6 @@ module.exports = {
 	getseatPrice,
 	getUser,
 	getTeamById,
-	cancel
+	cancel,
+	getOrderByEveryId
 };

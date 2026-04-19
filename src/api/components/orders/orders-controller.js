@@ -38,7 +38,7 @@ async function orderPlacement(request, response, next) {
 
 async function payment(request, response, next) {
 	try {
-		
+		let hasil;
 		const tiketInfo = request.order;
 		
 		const currentUser = await orderService.getUser(tiketInfo.userId);
@@ -54,8 +54,7 @@ async function payment(request, response, next) {
 
 			if (currentUser.credit >= currentSeat.price && !currentSeat.isBooked) {
 				const order = await orderService.payment(currentUser, currentSeat, tiketInfo);
-				console.log(order)
-				const hasil = await orderService.createTicket(order);
+				hasil = await orderService.createTicket(order);
 			}
 			else if (!(currentUser.credit >= currentSeat.price)){
 				throw errorResponder(
@@ -74,7 +73,12 @@ async function payment(request, response, next) {
 		}
 
 
-		return response.status(201).json({message: 'Ticket payment has been confirmed and given to user'});
+		return response.status(201).json(
+			{
+				message: 'Ticket payment has been confirmed and given to user',
+				ticket: hasil
+			}
+		);
 	} catch (error) {
 		return next(error);
 	}

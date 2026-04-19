@@ -1,11 +1,26 @@
 const ordersRepository = require('./orders-repository');
 const ticketService = require("../tickets/tickets-service");
+const { errorResponder, errorTypes } = require('../../../core/errors');
 async function createTicket(tiket) {
 	return ordersRepository.createTicket(tiket)
 }
 
+async function orderForTheSameGameAndSeat(userId, seatId, gameId){
+	const order = await ordersRepository.getOrderByEveryId(userId, seatId, gameId);
+	return !!order;
+}
+
 async function orderPlacement(userId, seatId, gameId) {
-	return ordersRepository.orderPlacement(userId, seatId, gameId);
+	const isOrdered = await orderForTheSameGameAndSeat(userId, seatId, gameId)
+	if (!isOrdered) {
+		return ordersRepository.orderPlacement(userId, seatId, gameId);
+	}
+	else {
+		throw errorResponder(
+			errorTypes.VALIDATION,
+			"You have already placed an order on this particular seat on this game"
+		);
+	}
 }
 
 async function getOrdersById(id) {
@@ -31,12 +46,15 @@ async function cancel(orderId) {
 
 async function payment(user, seat, order){
 
-	console.log("Seat price: " + seat.price);
 	const game = await ordersRepository.getGameById(order.gameId);
-	console.log(game.homeTeam);
-	console.log(game.awayTeam);
 	const awayTeamId = game.awayTeam.teamId;
 	const homeTeamId = game.homeTeam.teamId;
+	if (order.status === "paid") {
+		throw errorResponder(
+			errorTypes.VALIDATION,
+			"You have paid this order!"
+		);
+	}
 	if (user.credit > seat.price && !seat.isBooked){
 		
 		
