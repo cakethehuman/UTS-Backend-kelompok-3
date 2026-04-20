@@ -1,4 +1,11 @@
 # UTS KELOMPOK 3 backend
+Anggota kelompok <br>
+535250001 - leo <br>
+535250009 - malvin <br>
+5352500013 - wilson <br>
+5352500019 - chandra <br>
+5352500043 - tan <br>
+5352500044 - felix <br>
 
 ## Development Setup
 
@@ -10,14 +17,17 @@
 6. Run `npm run dev` to start the dev server.
 7. Test the endpoints in the API client app.
 
-## Add New API Endpoints
+## NBA Game Ticketing API 
+<img width="288" height="175" alt="image" src="https://github.com/user-attachments/assets/04181795-a613-4155-9cc9-93c0195c1494" />
+API Backend yang tangguh untuk sistem reservasi tiket pertandingan NBA.
 
+## Installation
+node js
 
+Dependencies
 
-
-
-
-## Creating user & login to it
+## Dokumentasi API (Endpoints)
+# Creating user & login to it
 POST `/NBA/auth/register`.
 making your account
 Request format:
