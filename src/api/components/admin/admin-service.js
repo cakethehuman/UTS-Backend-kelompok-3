@@ -19,6 +19,10 @@ async function getTeamsById(id) {
 	return adminRepository.getTeamsById(id);
 }
 
+async function getUsers() {
+	return adminRepository.getUsers();
+}
+
 async function getUserById(id) {
 	return adminRepository.getUsersById(id);
 }
@@ -164,6 +168,7 @@ module.exports = {
 	deleteTicket,
 
 	// Users
+	getUsers,
 	getUserById,
 
 	// seats

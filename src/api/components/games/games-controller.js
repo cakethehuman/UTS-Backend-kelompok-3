@@ -44,9 +44,24 @@ async function getSeats(request, response, next) {
 	}
 }
 
+async function getGameSeat(request, response, next) {
+	try {
+		const {gameId, id} = request.params;
+		const seat = await gamesService.getSeat(gameId, id);
+
+		if (!seat) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Seat not found in this game');
+		}
+
+		return response.status(200).json(seat);
+	} catch (error) {
+		return next(error);
+	}
+}
+
 module.exports = {
 	getGame,
 	getGames,
 	getSeats,
-	getSeats,
+	getGameSeat,
 };
