@@ -5,7 +5,7 @@ async function getTickets() {
 }
 
 async function getTicketById(id) {
-	return Tickets.findById(id);
+	return Tickets.find({'userInfo.userId': id});
 }
 
 async function updateTicket(id, updateData) {
@@ -26,11 +26,9 @@ async function cancelTicket(id) {
 }
 
 async function getTicketByOrderId(orderId) {
-	return Tickets.findOne(
-		{
-			"orderInfo.orderId": orderId
-		}
-	);
+	return Tickets.findOne({
+		'orderInfo.orderId': orderId,
+	});
 }
 
 module.exports = {
@@ -44,5 +42,5 @@ module.exports = {
 	deleteTicket,
 	cancelTicket,
 	findTicketsbyId,
-	getTicketByOrderId
+	getTicketByOrderId,
 };
