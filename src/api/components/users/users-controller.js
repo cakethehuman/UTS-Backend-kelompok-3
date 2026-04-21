@@ -51,7 +51,7 @@ async function addCredits(request, response, next) {
 	}
 }
 
-
 module.exports = {
 	addCredits,
+	getUser,
 };

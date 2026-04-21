@@ -14,16 +14,16 @@ async function getTickets(request, response) {
 
 async function getTicketById(request, response) {
 	try {
-		const {id} = request.params;
-		const ticket = await ticketService.getTicketById(id);
+		const id = request.user.id;
+		const tickets = await ticketService.getTicketById(id);
 
-		if (!ticket) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Ticket not found');
+		if (!tickets) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Something went wrong!');
 		}
 
-		return response.status(200).json(ticket);
-	} catch (error) {
-		return errorResponder(response, error, errorTypes.INTERNAL_SERVER_ERROR);
+		response.status(200).json({message: tickets});
+	} catch (err) {
+		next(err);
 	}
 }
 
@@ -78,9 +78,13 @@ async function cancelTicket(request, response) {
 
 async function getMyTicket(request, response, next) {
 	try {
-		const {id} = request.params.id;
+		const id = request.user.id;
+		const tickets = await ticketService.getTicketById(id);
 
-		const tickets = await ticketService.getTicketsById(id);
+		if (!tickets) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Something went wrong!');
+		}
+
 		response.status(200).json({message: tickets});
 	} catch (err) {
 		next(err);
