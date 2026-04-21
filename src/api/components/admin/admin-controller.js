@@ -361,6 +361,20 @@ async function cancellationApproval(request, response, next) {
 	} catch (error) {
 		next(error);
 	}
+
+	async function getUsers(request, response, next) {
+		try {
+			const users = await adminService.getUsers();
+ 
+			if (!users) {
+				throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to retrieve users');
+			}
+ 
+			return response.status(200).json(users);
+		} catch (error) {
+			next(error);
+			}	
+	}
 }
 
 module.exports = {
@@ -385,4 +399,6 @@ module.exports = {
 	// orders
 	getOrders,
 	cancellationApproval,
+	//user
+	getUsers,
 };

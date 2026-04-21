@@ -31,6 +31,10 @@ async function getSeatsById(id) {
 	return Seats.findById(id);
 }
 
+async function getUsers() {
+	return Users.find({});
+}
+
 async function getUsersById(id) {
 	return Users.findById(id);
 }
@@ -177,7 +181,6 @@ async function deleteTicket(id) {
 
 module.exports = {
 	// Games
-
 	createGame,
 	updateGame,
 	getGamesById,
@@ -202,6 +205,7 @@ module.exports = {
 	deleteTeam,
 
 	// User
+	getUsers,
 	getUsersById,
 	addUserCredit,
 
