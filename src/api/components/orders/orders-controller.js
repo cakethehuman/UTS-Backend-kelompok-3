@@ -1,6 +1,24 @@
 const orderService = require('./orders-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 
+async function getUserOrders(request, response, next) {
+	try {
+		const userId = request.user.id;
+
+		if (!userId) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to identify user from token');
+		}
+		const userOrders = await orderService.getOrdersByUserId(userId);
+
+		return response.status(200).json({
+			message: 'Successfully retrieved your orders',
+			data: userOrders,
+		});
+	} catch (error) {
+		return next(error);
+	}
+}
+
 async function orderPlacement(request, response, next) {
 	try {
 		const {seatId, gameId} = request.body;
@@ -109,4 +127,5 @@ module.exports = {
 	orderPlacement,
 	payment,
 	cancel,
+	getUserOrders,
 };
