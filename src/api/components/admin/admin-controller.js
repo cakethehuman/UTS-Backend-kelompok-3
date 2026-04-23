@@ -231,39 +231,6 @@ async function getUserByid(request, response, next) {
 	}
 }
 
-// make tickets
-async function createTickets(request, response, next) {
-	try {
-		const {userId, gameId, seatId} = request.body;
-
-		if (!userId) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a usesrId');
-		}
-
-		if (!gameId) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a gameId');
-		}
-
-		if (!seatId) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed need to add a seatId');
-		}
-
-		const userInfo = await adminService.getUserById(userId);
-		const gameInfo = await adminService.getGamesById(gameId);
-		const seatInfo = await adminService.getSeatsById(seatId);
-
-		const tickets = await adminService.createTickets(userInfo, gameInfo, seatInfo);
-
-		if (!tickets) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to make tickets');
-		}
-
-		return response.status(200).json(tickets);
-	} catch (error) {
-		return next(error);
-	}
-}
-
 // change stuff
 
 // change games

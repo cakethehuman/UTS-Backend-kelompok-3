@@ -55,10 +55,6 @@ async function createGame(homeTeamInfo, awayTeamInfo, date) {
 	return adminRepository.createGame(homeTeamInfo, awayTeamInfo, date);
 }
 
-async function createTickets(userInfo, gameInfo, seatInfo, orderInfo) {
-	return adminRepository.createTickets(userInfo, gameInfo, seatInfo, orderInfo);
-}
-
 async function deleteTicket(id) {
 	return adminRepository.deleteTicket(id);
 }
