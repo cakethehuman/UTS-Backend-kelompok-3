@@ -70,6 +70,10 @@ async function getOrders(filters) {
 	Object.keys(filters).forEach((key) => {
 		if (allowedFilters.includes(key) && filters[key] ) {
 			// filters[key] mengecek truthy / falsy nya
+			if (key === "orderId"){
+				query["_id"] = filters[key];
+				return
+			}
 			query[key] = filters[key];
 		}
 	});
