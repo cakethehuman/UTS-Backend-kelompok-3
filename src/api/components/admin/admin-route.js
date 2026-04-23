@@ -53,7 +53,8 @@ module.exports = (app) => {
 	route.post('/seat', verifyLogin, verifyAdmin, adminController.createSeats);
 	// update seats
 
-	// tickets routes
+	// tickets route
+	
 
 	// update ticket
 	route.post('/tickets', verifyLogin, verifyAdmin, adminController.createTickets);
