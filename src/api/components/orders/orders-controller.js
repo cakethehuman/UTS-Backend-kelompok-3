@@ -23,7 +23,6 @@ async function orderPlacement(request, response, next) {
 		if (!userInfo) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to find user');
 		}
-		console.log(seatId);
 
 		const seatInfo = await orderService.getSeat(seatId);
 
@@ -37,7 +36,6 @@ async function orderPlacement(request, response, next) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to find game');
 		}
 
-		console.log(gameInfo);
 		const order = await orderService.orderPlacement(userInfo, seatInfo, gameInfo);
 
 		if (!order) {

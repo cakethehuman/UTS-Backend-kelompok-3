@@ -68,7 +68,7 @@ async function getOrders(filters) {
 	const query = {}; // ini yang akan di pass ke adminRepo
 	// Object.keys mereturn key yang ada json object
 	Object.keys(filters).forEach((key) => {
-		if (allowedFilters.includes(key) && filters[key]) {
+		if (allowedFilters.includes(key) && filters[key] ) {
 			// filters[key] mengecek truthy / falsy nya
 			query[key] = filters[key];
 		}
