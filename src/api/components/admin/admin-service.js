@@ -43,6 +43,10 @@ async function createTeams(name, abbreviation, venue, state, city) {
 	return adminRepository.createTeams(name, abbreviation, venue, state, city);
 }
 
+async function createSeat(gameId, seatNumber, price) {
+	return adminRepository.createSeat(gameId, seatNumber, price);
+}
+
 async function createSeats(seatsInfo) {
 	return adminRepository.createSeats(seatsInfo);
 }
@@ -174,6 +178,7 @@ module.exports = {
 	// seats
 	getSeatsById,
 	createSeats,
+	createSeat,
 
 	// Orders
 	getOrders,

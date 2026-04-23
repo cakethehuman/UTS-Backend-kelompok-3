@@ -16,6 +16,9 @@ module.exports = (app) => {
 	// see all users
 	route.get('/users', verifyLogin, verifyAdmin, adminController.getUsers);
 
+	// see user by id
+	route.get('/users/:id', verifyLogin, verifyAdmin, adminController.getUserByid);
+
 	// see all the tickets that have been made
 	route.get('/tickets', verifyLogin, verifyAdmin, adminController.getTickets);
 
@@ -44,6 +47,10 @@ module.exports = (app) => {
 
 	route.delete('/teams/:id', verifyLogin, verifyAdmin, adminController.deleteTeam);
 
+	// seats route
+
+	// make seats
+	route.post('/seat', verifyLogin, verifyAdmin, adminController.createSeats);
 	// update seats
 
 	// tickets routes

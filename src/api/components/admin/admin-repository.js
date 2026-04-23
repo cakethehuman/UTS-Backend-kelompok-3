@@ -65,6 +65,11 @@ async function deleteOrder(id) {
 async function createSeats(seatsInfo) {
 	return Seats.create(seatsInfo);
 }
+
+async function createSeat(gameId, seatNumber, price) {
+	return Seats.create({gameId, seatNumber, price});
+}
+
 async function createGame(homeTeamInfo, awayTeamInfo, date) {
 	return Games.create({
 		homeTeam: {
@@ -196,6 +201,7 @@ module.exports = {
 	getSeatsById,
 	updateSeatStatus,
 	createSeats,
+	createSeat,
 
 	// Teams
 	getTeams,
