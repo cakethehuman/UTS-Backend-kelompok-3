@@ -6,7 +6,7 @@ async function getGames(request, response, next) {
 	try {
 		const games = await gamesService.getGames();
 
-		if(!games){
+		if (!games) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Games not found');
 		}
 
@@ -47,7 +47,7 @@ async function getSeats(request, response, next) {
 async function getGameSeat(request, response, next) {
 	try {
 		const {gameId, id} = request.params;
-		const seat = await gamesService.getSeat(gameId, id);
+		const seat = await gamesService.getGameSeat(gameId, id);
 
 		if (!seat) {
 			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Seat not found in this game');

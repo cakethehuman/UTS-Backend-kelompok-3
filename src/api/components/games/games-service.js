@@ -13,7 +13,7 @@ async function getSeats(id) {
 }
 
 async function getGameSeat(gameId, seatId) {
-	return gamesRepository.getSeat(gameId, seatId);
+	return gamesRepository.getGameSeat(gameId, seatId);
 }
 
 async function createGame(homeTeam, awayTeam, date, status) {
