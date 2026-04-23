@@ -5,6 +5,10 @@ const {Users} = require('../../../models');
 const {Games} = require('../../../models');
 const {Teams} = require('../../../models');
 
+async function getOrdersByUserId(userId) {
+	return Orders.find({userId: userId});
+}
+
 async function orderPlacement(userInfo, seatInfo, gameInfo) {
 	return Orders.create({
 		userId: userInfo._id,
@@ -95,4 +99,5 @@ module.exports = {
 	getTeamById,
 	cancel,
 	getOrderByEveryId,
+	getOrdersByUserId,
 };
