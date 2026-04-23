@@ -17,6 +17,7 @@ module.exports = (db) =>
 			},
 			isBooked: {
 				type: Boolean,
+				default: false,
 				required: true,
 			},
 		})

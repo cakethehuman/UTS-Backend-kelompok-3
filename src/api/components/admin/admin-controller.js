@@ -98,9 +98,9 @@ async function createSeats(request, response, next) {
 	try {
 		const {gameId, seatNumber, price} = request.body;
 
-		if (!seatsInfo) {
-			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'No seat info to make seats');
-		}
+		// if (!seatsInfo) {
+		// 	throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'No seat info to make seats');
+		// }
 
 		const seats = await adminService.createSeat(gameId, seatNumber, price);
 
