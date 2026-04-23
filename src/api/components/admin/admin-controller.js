@@ -1,4 +1,5 @@
 const adminService = require('./admin-service');
+const usersService = require('../users/users-service');
 const {generateSeats} = require('../../../utils/seatGenerator');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 const {tr, da} = require('@faker-js/faker');
@@ -193,6 +194,23 @@ async function createGamesBulk(request, response, next) {
 	}
 }
 
+async function getUserByid(request, response, next) {
+	try {
+		const {id} = request.params;
+		const userDetail = await usersService.getUser(id);
+
+		if (!userDetail) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
+		}
+		return response.status(200).json({
+			message: 'Successfully retrieved user detail',
+			data: userDetail,
+		});
+	} catch (error) {
+		return next(error);
+	}
+}
+
 // make tickets
 async function createTickets(request, response, next) {
 	try {
@@ -213,7 +231,6 @@ async function createTickets(request, response, next) {
 		const userInfo = await adminService.getUserById(userId);
 		const gameInfo = await adminService.getGamesById(gameId);
 		const seatInfo = await adminService.getSeatsById(seatId);
-		const orderInfo = await adminService.get;
 
 		const tickets = await adminService.createTickets(userInfo, gameInfo, seatInfo);
 
@@ -365,15 +382,15 @@ async function cancellationApproval(request, response, next) {
 	async function getUsers(request, response, next) {
 		try {
 			const users = await adminService.getUsers();
- 
+
 			if (!users) {
 				throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed to retrieve users');
 			}
- 
+
 			return response.status(200).json(users);
 		} catch (error) {
 			next(error);
-			}	
+		}
 	}
 }
 
@@ -401,4 +418,5 @@ module.exports = {
 	cancellationApproval,
 	//user
 	getUsers,
+	getUserByid,
 };

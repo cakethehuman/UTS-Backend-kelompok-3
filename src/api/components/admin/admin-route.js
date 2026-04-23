@@ -15,7 +15,7 @@ module.exports = (app) => {
 
 	// see all users
 	route.get('/users', verifyLogin, verifyAdmin, adminController.getUsers);
-	
+
 	// see all the tickets that have been made
 	route.get('/tickets', verifyLogin, verifyAdmin, adminController.getTickets);
 

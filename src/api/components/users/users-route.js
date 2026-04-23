@@ -26,4 +26,7 @@ module.exports = (app) => {
 
 	// Delete user
 	route.delete('/:id', usersController.deleteUser);
+
+	// Get User Detail by ID (Admin only)
+	route.get('/users/:id', verifyLogin, verifyAdmin, adminController.getUserById);
 };
