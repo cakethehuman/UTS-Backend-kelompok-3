@@ -55,6 +55,10 @@ async function createGame(homeTeamInfo, awayTeamInfo, date) {
 	return adminRepository.createGame(homeTeamInfo, awayTeamInfo, date);
 }
 
+async function createTickets(userInfo, gameInfo, seatInfo, orderInfo) {
+	return adminRepository.createTickets(userInfo, gameInfo, seatInfo, orderInfo);
+}
+
 async function deleteTicket(id) {
 	return adminRepository.deleteTicket(id);
 }
@@ -64,11 +68,11 @@ async function getOrders(filters) {
 	const query = {}; // ini yang akan di pass ke adminRepo
 	// Object.keys mereturn key yang ada json object
 	Object.keys(filters).forEach((key) => {
-		if (allowedFilters.includes(key) && filters[key] ) {
+		if (allowedFilters.includes(key) && filters[key]) {
 			// filters[key] mengecek truthy / falsy nya
-			if (key === "orderId"){
-				query["_id"] = filters[key];
-				return
+			if (key === 'orderId') {
+				query['_id'] = filters[key];
+				return;
 			}
 			query[key] = filters[key];
 		}

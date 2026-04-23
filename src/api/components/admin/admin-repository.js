@@ -91,6 +91,29 @@ async function createGame(homeTeamInfo, awayTeamInfo, date) {
 	});
 }
 
+async function createTickets(userInfo, gameInfo, seatInfo, orderInfo) {
+	return Tickets.create({
+		userInfo: {
+			userId: userInfo._id,
+			email: userInfo.email,
+			fullName: userInfo.fullName,
+		},
+		gameInfo: {
+			gameId: gameInfo._id,
+			homeTeam: gameInfo.homeTeam.name,
+			awayTeam: gameInfo.awayTeam.name,
+		},
+		seatInfo: {
+			seatId: seatInfo._id,
+			seatNumber: seatInfo.seatNumber,
+			isBooked: seatInfo.isBooked,
+		},
+		orderInfo: {
+			orderId: orderInfo._id,
+		},
+	});
+}
+
 async function getOrders(filter) {
 	return Orders.find(filter);
 }
