@@ -21,6 +21,10 @@ async function getUserByFullName(fullName) {
 	return Users.findOne({fullName});
 }
 
+async function updateUser(id, newCredit) {
+	return Users.updateOne({_id: id}, {$set: {credit: newCredit}});
+}
+
 async function createUser(email, password, fullName, credit) {
 	return Users.create({email, password, fullName, credit});
 }
@@ -73,4 +77,5 @@ module.exports = {
 	updateUserSession,
 	getUserByFullName,
 	changePassword,
+	updateUser,
 };
