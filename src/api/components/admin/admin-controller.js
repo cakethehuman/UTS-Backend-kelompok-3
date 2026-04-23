@@ -231,7 +231,6 @@ async function createTickets(request, response, next) {
 		const userInfo = await adminService.getUserById(userId);
 		const gameInfo = await adminService.getGamesById(gameId);
 		const seatInfo = await adminService.getSeatsById(seatId);
-		const orderInfo = await adminService.get;
 
 		const tickets = await adminService.createTickets(userInfo, gameInfo, seatInfo);
 
