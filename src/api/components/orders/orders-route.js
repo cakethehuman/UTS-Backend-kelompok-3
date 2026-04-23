@@ -10,6 +10,9 @@ const route = express.Router();
 module.exports = (app) => {
 	app.use('/orders', route);
 
+	// checking your own orders
+	route.get('/me', verifyLogin, ordersController.getUserOrders);
+
 	// placing order
 	route.post('/', verifyLogin, ordersController.orderPlacement);
 

@@ -2,6 +2,10 @@ const ordersRepository = require('./orders-repository');
 const ticketService = require('../tickets/tickets-service');
 const {errorResponder, errorTypes} = require('../../../core/errors');
 
+async function getOrdersByUserId(userId) {
+	return ordersRepository.getOrdersByUserId(userId);
+}
+
 async function createTicket(tiket) {
 	return ordersRepository.createTicket(tiket);
 }
@@ -99,4 +103,5 @@ module.exports = {
 	getSeat,
 	getseatPrice,
 	cancel,
+	getOrdersByUserId,
 };
