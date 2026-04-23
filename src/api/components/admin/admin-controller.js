@@ -299,7 +299,7 @@ async function deleteTeam(request, response, next) {
 			return response.status(404).json({message: 'Games not found'});
 		}
 
-		return response.status(200).json({message: 'Games has been deleted'});
+		return response.status(200).json({message: 'Teams has been deleted'});
 	} catch (error) {
 		return next(error);
 	}
@@ -403,9 +403,7 @@ module.exports = {
 	deleteGame,
 	// tickets
 	getTickets,
-	createTickets,
 	deleteTicket,
-	createTickets,
 	//seat
 	createSeat,
 	// teams
