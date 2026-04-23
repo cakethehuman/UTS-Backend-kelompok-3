@@ -6,6 +6,7 @@ const tickets = require('./components/tickets/tickets-route');
 const users = require('./components/users/users-route');
 const auth = require('./components/authentication/auth-route');
 const orders = require('./components/orders/orders-route');
+const teams = require('./components/teams/teams-route')
 
 // exports
 module.exports = () => {
@@ -17,6 +18,6 @@ module.exports = () => {
 	users(app);
 	games(app);
 	auth(app);
-
+	teams(app);
 	return app;
 };
