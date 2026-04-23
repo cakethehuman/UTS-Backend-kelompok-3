@@ -93,6 +93,26 @@ async function createSeat(request, response, next) {
 	}
 }
 
+// create 1 seaat
+async function createSeats(request, response, next) {
+	try {
+		const {gameId, seatNumber, price} = request.body;
+
+		if (!seatsInfo) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'No seat info to make seats');
+		}
+
+		const seats = await adminService.createSeat(gameId, seatNumber, price);
+
+		if (!seats) {
+			throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'Failed cant make seats');
+		}
+		return response.status(201).json({message: 'Seat created successfully'});
+	} catch (error) {
+		next(error);
+	}
+}
+
 // create games
 async function createGames(request, response, next) {
 	try {
@@ -419,4 +439,6 @@ module.exports = {
 	//user
 	getUsers,
 	getUserByid,
+	// seats
+	createSeats,
 };
