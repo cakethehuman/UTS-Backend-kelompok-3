@@ -14,8 +14,10 @@ Anggota kelompok <br>
 3. Install the recommended VS Code extensions: `ESLint`, `Prettier`, `jsonwebtoken `.
 4. Copy and rename `.env.example` to `.env`. Open `.env` and change the database connection string.
 5. Run `npm install` to install the project dependencies.
-6. Run `npm run dev` to start the dev server.
-7. Test the endpoints in the API client app.
+6. Run `npm run seed` to make admin account (wait for the seedAdmin responded).
+7. Run `npm run seedTeams` to input teams into database.
+8. Run `npm run dev` to start the dev server.
+9. Test the endpoints in the API client app.
 
 ## NBA Game Ticketing API 
 <img width="288" height="175" alt="image" src="https://github.com/user-attachments/assets/04181795-a613-4155-9cc9-93c0195c1494" />
