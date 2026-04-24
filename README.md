@@ -31,6 +31,7 @@ Dependencies
 POST `/NBA/auth/register`.
 making your account
 Request format:
+```json
 {
   "email": "youraccount@gmail.com",
   "fullName": "your name",
@@ -38,14 +39,17 @@ Request format:
   "confirmPassword": "your password",
   credit: optional (use number, cannot < 0, default value is 0)
 }
+```
 
 POST `/auth/login`.
 login to your created account
 Request format:
+```json
 {
   "email": "youraccount@gmail.com",
   "password": "your password"
 }
+```
 
 make sure you grab/copy your token after login, go to header, put in "Authorization" parameter, "Bearer <token>" put in your token in the Field.
 
@@ -53,27 +57,32 @@ make sure you grab/copy your token after login, go to header, put in "Authorizat
 PATCH `/NBA/auth/:userId/password`.
 Change your account password
 Request format:
+```json
 {
   "oldPassword": "your old password",
   "newPassword": "your new password",
   "confirmNewPassword": "your new pasword"
 }
+```
 
 PATCH `/NBA/auth/:userId/email`.
 Change your account email
 Request format:
+```json
 {
   "newEmail": "your new email",
   "password": "your password"
 }
-
+```
 PATCH `/NBA/auth/:userId/name`.
 Change your account name
 Request format:
+```json
 {
   "newName": "your new name",
   "password": "your password"
 }
+```
 
 
 # Getting informations about a game
@@ -91,25 +100,30 @@ Change you account name
 POST `NBA/orders/`.
 Placing orders to buy tickets
 Request format:
+```json
 {
   "seatId": "seatId",
   "gameId": "gameId"
 }
+```
 
 POST `NBA/orders/payment`.
 Pay orders to buy tickets
 Request format:
+```json
 {
   "orderId": "yourorderId"
 }
+```
 
 PATCH `NBA/orders/cancel`.
 Cancel an order
 Request format:
+```json
 {
   "orderId": "yourorderId"
 }
-
+```
 
 # Getting informations about teams
 GET `NBA/teams/`.
@@ -126,14 +140,17 @@ Get informations about user's ticket
 PATCH `/NBA/tickets/:ticketId/cancel`.
 Cancel a ticket
 Request format:
+```json
 {
   "ticketId": "yourticketid"
 }
-
+```
 # Update user's credit
 POST `/NBA/users/:userId/balance`.
 Request format:
+```json
 {
   "amount": "yourwantedamount"
 }
+```
 
