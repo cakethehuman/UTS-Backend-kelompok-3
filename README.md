@@ -109,6 +109,13 @@ Request format:
 }
 ```
 
+## IMPORTANT
+
+# When accessing endpoints that normally needs `userId` to determine which user are placing orders, paying order, or ,
+# cancelling some specific order, you just have to login first so that it will verify the access token that have been generated.
+# If the access token exist, then it (`verifyAccessToken`) function on `src/utils/jwt.js` will return a payload that holds the current
+# user that has been logged in
+
 POST `NBA/orders/payment`.
 Pay orders to buy tickets
 Request format:
